@@ -89,7 +89,7 @@
 var currentMonth = date.getMonth();
 var currentDate = date.getDate();
 var currentYear = date.getFullYear();
-jQuery('#sandbox-container').daterangepicker({
+$('#sandbox-container').daterangepicker({
   startDate: moment(date).add(1,'days'),
   minDate: moment(date).add(1,'days'),
         locale: {

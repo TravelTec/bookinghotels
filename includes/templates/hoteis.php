@@ -717,9 +717,12 @@
 }
 }
 
+$contador = 0;
+
     for ($x=0; $x < count($apartamentos); $x++) {  ?>
 
         <?php if(strtotime(implode("-", array_reverse(explode("-", $dados[1])))) >= strtotime($apartamentos[$x]['data_inicial']) && strtotime(implode("-", array_reverse(explode("-", $dados[2])))) <= strtotime($apartamentos[$x]['data_fim'])){ ?>
+            <?php $contador++; ?>
         <div class="row justify-content-center font hotel" >
          <div class="col-md-10 col-lg-10 col-xs-12">
             <div class="row gallery0" style="background-color: #fff;box-shadow: 7px 14px 8px #ccc;border-radius: 8px;border: 1px solid #ccc;">
@@ -779,7 +782,7 @@
                         <input type="hidden" name="valor" value="<?=$apartamentos[$x]['valor']?>">
                         <input type="hidden" name="taxas" value="<?=$apartamentos[$x]['taxas']?>">
                         <input type="hidden" name="qtd_quartos" value="<?=$apartamentos[$x]['qtd_quartos']?>"> 
-                        
+
                         <button class="btn btn-primary" style="float: right;width: 100%;font-size: 17px;margin-bottom: 14px;"><i class="fas fa-calendar-alt"></i> Ver disponibilidade</button>
                       
                   </form>
@@ -790,6 +793,7 @@
       </div>
       <br>
   <?php  } 
+
 }
                     }
                 }
@@ -798,6 +802,15 @@
    endif; 
 }
 } 
+
+  if ($contador == 0) { ?>
+    <div class="row justify-content-center font hotel" >
+        <h4>Nenhum resultado disponível.</h4>
+    </div>
+    <?php
+  }
+
+
 
 ?>
 

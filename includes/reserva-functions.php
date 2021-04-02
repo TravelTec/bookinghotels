@@ -100,10 +100,10 @@ function ttbooking_recomm_css(){
         wp_enqueue_script('ttbooking-jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
         wp_enqueue_script('ttbooking-sweetalert', 'https://unpkg.com/sweetalert/dist/sweetalert.min.js'); 
     wp_enqueue_script( 'scripts-moment', 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js');
+    wp_enqueue_script( 'scripts-datepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js');
         wp_enqueue_script('lttbooking-scripts', plugin_dir_url(__FILE__).'assets/js/scripts_site_ttbooking.js'); 
     wp_enqueue_script( 'scripts-datepickerj', plugin_dir_url(__FILE__).'assets/js/datepicker.js'); 
     wp_enqueue_script( 'scripts-datepickerj', plugin_dir_url(__FILE__).'assets/js/datepicker.pt-BR.js'); 
-    wp_enqueue_script( 'scripts-datepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js');
     }
 add_action('wp_head' , 'ttbooking_recomm_css' ); 
 
