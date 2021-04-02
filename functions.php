@@ -14,7 +14,7 @@ GitHub Plugin URI: https://github.com/TravelTec/bookinghotels
 
 Description: Voucher Tec - Tarifário de hotéis é um plugin desenvolvido para agências e operadoras de turismo que precisam tratar diárias de hospedagem de várias propriedades simultaneamente.
 
-Version: 1.0.10
+Version: 1.0.11
 
 Author: Travel Tec
 
@@ -96,7 +96,7 @@ class TTBooking {
 
 
     add_action( 'admin_init', array( &$this, 'reserva_update_checker_setting') );  
-    add_shortcode('TTBOOKING_MOTOR_RESERVA_HOTEIS', array( &$this, 'funcaoParaShortcode') );  
+    add_shortcode('TTBOOKING_MOTOR_RESERVA', array( &$this, 'funcaoParaShortcode') );  
   }
 
 /**
@@ -147,7 +147,36 @@ class TTBooking {
 
     } 
 
-    function funcaoParaShortcode(){ 
+    function funcaoParaShortcode($atts){ 
+        $propriedade = $atts['propriedade'];
+
+        $tipo_propriedade = [];
+   
+           $cat_terms = get_terms(
+                   array('tipo_propriedades'),
+                   array(
+                           'hide_empty'    => false,
+                           'orderby'       => 'name',
+                           'order'         => 'ASC',
+                           'number'        => 50 //specify yours
+                       )
+               );
+   
+   if( $cat_terms ){
+   
+       foreach( $cat_terms as $term ) { 
+   
+           $propriedades[] = array("tipo_propriedade" => $term->slug);
+   
+   }
+   }   
+
+   for ($i=0; $i < count($propriedades); $i++) { 
+       if ($propriedade == $propriedades[$i]["tipo_propriedade"]) {
+           $texto_motor = $this->get_option( 'texto_motor'.$i );
+       }
+   }
+
         $localizacao = [];
    
            $cat_terms = get_terms(
@@ -217,13 +246,14 @@ class TTBooking {
 
    $total = array_merge($locais, $hotelaria);  
         echo "<input type='hidden' id='destinos_motor' value='".json_encode($total)."'>";
+        echo "<input type='hidden' id='propriedade' value='".$propriedade."'>";
 
         $options = $this->options;
 
         return '<div class="row font hotel" style="background-color: '.$options['cor_fundo_texto'].';min-height: 100px;padding-top: 20px;">
                 <div class="col-lg-1"></div>
                 <div class="col-lg-10">
-                    <h4 style="margin-bottom: 17px !important;margin-left: -15px !important;font-size: 23px;color: '.$options['cor_texto'].' !important">'.$options['texto_motor'].'</h4>
+                    <h4 style="margin-bottom: 17px !important;margin-left: -15px !important;font-size: 23px;color: '.$options['cor_texto'].' !important">'.$texto_motor.'</h4>
 <div class="row grid" style="
     box-shadow: 0px 0px 7px #888585;
 ">

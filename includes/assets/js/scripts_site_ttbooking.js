@@ -142,6 +142,7 @@ function redirect_hotel(){
         jQuery("#valida_campo_destino").attr('style', 'display:none;margin: 0 !important;padding: 3px 10px;font-size: 10px;color: #fff;background-color: #ab0808;top: 34px;position: absolute;z-index: 99999;');
         jQuery("#valida_campo_data").attr('style', 'display:none;margin: 0 !important;padding: 3px 10px;font-size: 10px;color: #fff;background-color: #ab0808;top: 34px;position: absolute;z-index: 99999;');
 
+        var propriedade = jQuery("#propriedade").val();
         var destino = jQuery("#destino_pesquisa").val();
         var data = jQuery("#validar_data").val();
         data = data.split(" - ");
@@ -161,7 +162,7 @@ function redirect_hotel(){
 
       jQuery("#dados").attr("style", "display:none; position: absolute;width: 100%;top: 48px;background-color: #fff;"); 
    jQuery(".dropdown").attr("style", "display:none;position: relative; top:-2px; background-color: #fff; padding: 16px; box-shadow: 0px 0px 5px #868585;z-index: 99999999;width: 100%;");
-  window.location.href = '/hoteis?param='+destino+';'+data_inicio+';'+data_final+';'+adt+';'+chd+';'+qts+';'+idade1+'-'+idade2+'-'+idade3+'-'+idade4+'-'+idade5+'-'+idade6;
+  window.location.href = '/hoteis?param='+destino+';'+data_inicio+';'+data_final+';'+adt+';'+chd+';'+qts+';'+idade1+'-'+idade2+'-'+idade3+'-'+idade4+'-'+idade5+'-'+idade6+';'+propriedade;
 }
 }
 

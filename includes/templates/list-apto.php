@@ -76,7 +76,7 @@
                'hide_empty'    => false,
                'orderby'       => 'name',
                'order'         => 'ASC',
-               'number'        => 6 //specify yours
+               'number'        => 50 //specify yours
            )
    );
    
@@ -86,7 +86,7 @@
    
    $args = array(
        'post_type'             => 'ttbooking',
-       'posts_per_page'        => 10, //specify yours
+       'posts_per_page'        => 50, //specify yours
        'post_status'           => 'publish',
        'tax_query'             => array(
                                    array(

@@ -26,6 +26,7 @@
     } 
    }
    $pax = $adt.' '.($adt > 1 ? 'adultos' : 'adulto').' '.$crianca;
+   $propriedade = $dados[7]; 
 
    $data_inicio = new DateTime(implode("-", array_reverse(explode("-", $data_inicio))));
     $data_fim = new DateTime(implode("-", array_reverse(explode("-", $data_final))));
@@ -587,6 +588,11 @@
                                                    'field'    => 'slug',
                                                    'terms'    => $term->slug,
                                                ),
+                                               array(
+                                                   'taxonomy' => 'tipo_propriedades',
+                                                   'field'    => 'slug',
+                                                   'terms'    => $propriedade,
+                                               ),
                                            ),
                    'ignore_sticky_posts'   => true //caller_get_posts is deprecated since 3.1
                );
@@ -717,13 +723,13 @@
 }
 }
 
-$contador = 0;
 
-    
 
 }
 
-for ($x=0; $x < count($apartamentos); $x++) {  ?>
+$contador = 0;
+
+    for ($x=0; $x < count($apartamentos); $x++) {  ?>
 
         <?php if(strtotime(implode("-", array_reverse(explode("-", $dados[1])))) >= strtotime($apartamentos[$x]['data_inicial']) && strtotime(implode("-", array_reverse(explode("-", $dados[2])))) <= strtotime($apartamentos[$x]['data_fim'])){ ?>
             <?php $contador++; ?>

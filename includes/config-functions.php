@@ -33,7 +33,16 @@ class TTBookingAdmin extends TTBooking {
 	 */
 	function init() {
 		$defaults = array(
-			'texto_motor' => '',
+			'texto_motor0' => '',
+			'texto_motor1' => '',
+			'texto_motor2' => '',
+			'texto_motor3' => '',
+			'texto_motor4' => '',
+			'texto_motor5' => '',
+			'texto_motor6' => '',
+			'texto_motor7' => '',
+			'texto_motor8' => '',
+			'texto_motor9' => '',
 			'cor_texto' => '',
 			'cor_fundo_texto' => '',
 			'cor_bordas' => '',

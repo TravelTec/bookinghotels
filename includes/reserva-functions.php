@@ -157,59 +157,7 @@ function ttbooking_create_tipo_propriedade_taxonomies(){
     register_taxonomy('tipo_propriedades', array('ttbooking'), $args);
 
 }
-add_action('init', 'ttbooking_create_tipo_propriedade_taxonomies');
-
-function ttbooking_create_categoria_taxonomies(){ 
-    $labels = array(
-
-        'name'              => _x('Categoria de apartamento', 'taxonomy general name', 'booking'),
-
-        'singular_name'     => _x('Categoria de apartamento', 'taxonomy singular name', 'booking'),
-
-        'search_items'      => __('Buscar categoria', 'booking'),
-
-        'all_items'         => __('Todas as categorias', 'booking'),
-
-        'parent_item'       => __('Categoria Pai', 'booking'),
-
-        'parent_item_colon' => __('Categoria Pai', 'booking'),
-
-        'edit_item'         => __('Editar Categoria', 'booking'),
-
-        'update_item'       => __('Editar Categoria', 'booking'),
-
-        'add_new_item'      => __('Nova categoria', 'booking'),
-
-        'new_item_name'     => __('Nome nova categoria', 'booking'),
-
-        'menu_name'         => __('Categoria ', 'booking'),
-
-    );
-
-
-
-    $args = array(
-
-        'hierarchical'      => true,
-
-        'labels'            => $labels,
-
-        'show_ui'           => true,
-
-        'show_in_rest'       => false,
-
-        'show_admin_column' => true,
-
-        'rewrite'           => array('slug' => 'categoria_apto', 'hierarchical' => true),
-
-    );
-
-
-
-    register_taxonomy('categoria_apto', array('ttbooking'), $args);
-
-}
-add_action('init', 'ttbooking_create_categoria_taxonomies');
+add_action('init', 'ttbooking_create_tipo_propriedade_taxonomies'); 
 
 function ttbooking_create_regime_taxonomies(){ 
     $labels = array(
