@@ -801,7 +801,7 @@ Licensed under MIT
                </div>
             </div>
  
-            <div style="text-align: right;margin-top: 110%;padding: 0px 10px;">
+            <div style="text-align: right;margin-top: 100%;padding: 0px 10px;">
                <span style="float: left;font-size: 13px"><strong style="font-size: 13px">Período: </strong><?=$_POST['periodo']?></span>
                                 <br>
                                 <strong style="float: left"><?=$_POST['acomodacao']?></strong><br>
