@@ -719,7 +719,11 @@
 
 $contador = 0;
 
-    for ($x=0; $x < count($apartamentos); $x++) {  ?>
+    
+
+}
+
+for ($x=0; $x < count($apartamentos); $x++) {  ?>
 
         <?php if(strtotime(implode("-", array_reverse(explode("-", $dados[1])))) >= strtotime($apartamentos[$x]['data_inicial']) && strtotime(implode("-", array_reverse(explode("-", $dados[2])))) <= strtotime($apartamentos[$x]['data_fim'])){ ?>
             <?php $contador++; ?>
@@ -793,8 +797,6 @@ $contador = 0;
       </div>
       <br>
   <?php  } 
-
-}
                     }
                 }
                     }
