@@ -753,6 +753,14 @@ Licensed under MIT
     background-color: #e8e8e8 !important;
     color: #737373 !important;
 }  
+.fotorama__wrap--css3 .fotorama__html, .fotorama__wrap--css3 .fotorama__stage .fotorama__img{
+   width: 100% !important;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover, .daterangepicker td.available {
+    background-color: #357ebd;
+    border-color: transparent;
+    color: #fff;
+}
    </style>
    <div class="container">
       <br><br>
@@ -769,9 +777,25 @@ Licensed under MIT
             <?php } ?>
             </div>
             <br>
-            <img src="<?=$url?>" class="img-responsive img-fluid" style="width: 100%">
-            <br>
-            <p style="margin-bottom: 0;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. <br> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
+            <div  class="fotorama" data-nav="thumbs">
+            <img src="<?=$url?>" style="width: 100%"> 
+            <?php  
+            //an array with all the images (ba meta key). The same array has to be in custom_postimage_meta_box_save($post_id) as well.
+             $meta_keys = array('featured_image0','featured_image1','featured_image2','featured_image3','featured_image4','featured_image5','featured_image6','featured_image7','featured_image8','featured_image9','featured_image10','featured_image11','featured_image12','featured_image13','featured_image14','featured_image15','featured_image16','featured_image17','featured_image18','featured_image19','featured_image20');
+
+             foreach($meta_keys as $meta_key){
+                 $image_meta_val=get_post_meta( $id, $meta_key, true); 
+                 print_r($image_meta_val);
+
+                 if (!empty($image_meta_val)) { 
+                 ?> 
+                     <img src="<?=wp_get_attachment_image_src( $image_meta_val)[0]?>" alt="" style="width: 100%"> 
+                  <?php } ?>
+             <?php } ?>
+          </div> 
+          <div class="" style="padding-top: 10px">
+            <?=$description;?>
+         </div>
             <br>
             <div class="tabbable-panel">
             <div class="tabbable-line">
@@ -783,7 +807,7 @@ Licensed under MIT
                </ul>
                <div class="tab-content">
                   <div class="tab-pane active" id="tab_default_1">
-                     <p>
+                     <p style="line-height: 2.3;">
                         <?=$servicos?>
                      </p> 
                   </div>  
@@ -803,7 +827,7 @@ Licensed under MIT
                </div>
             </div>
  
-            <div style="text-align: right;margin-top: 100%;padding: 0px 10px;">
+            <div style="text-align: right;margin-top: 120%;padding: 0px 10px;">
                <span style="float: left;font-size: 13px"><strong style="font-size: 13px">Período: </strong><?=$_POST['periodo']?></span>
                                 <br>
                                 <strong style="float: left"><?=$_POST['acomodacao']?></strong><br>
@@ -850,11 +874,63 @@ date_default_timezone_set('America/Sao_Paulo');
             <span>De <?=strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_product_info3)))))?> a <?=strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_final_product_info3)))))?></span>
             <?php } ?>
          </div>
+            <br>
+            <div style="padding: 0px 10px;">
+            <h4 style="border-bottom: 1px solid #ddd;padding-bottom: 7px;">TERMOS DE RESERVA</h4> 
+            <?php 
+
+            $cat_terms = get_terms(
+       array('termos'),
+       array(
+               'hide_empty'    => false,
+               'orderby'       => 'name',
+               'order'         => 'ASC',
+               'number'        => 50 //specify yours
+           )
+   );
+   
+   if( $cat_terms ){
+   
+   foreach( $cat_terms as $term ) { 
+   
+   $args = array(
+       'post_type'             => 'ttbooking',
+       'posts_per_page'        => 50, //specify yours
+       'post_status'           => 'publish',
+       'tax_query'             => array(
+                                   array(
+                                       'taxonomy' => 'termos',
+                                       'field'    => 'slug',
+                                       'terms'    => $term->slug,
+                                   ),
+                               ),
+       'ignore_sticky_posts'   => true //caller_get_posts is deprecated since 3.1
+   );
+   $_posts = new WP_Query( $args ); 
+   
+   if( $_posts->have_posts() ) :
+   while( $_posts->have_posts() ) : $_posts->the_post();  
+   $post = get_post(); 
+         if ($post->ID == $id) {
+            echo $post->post_content.'<hr>';
+         }
+   ?> 
+<?php
+   endwhile;
+   endif;
+   wp_reset_postdata(); //important  
+
+}
+}
+    ?>
+            </div>
          </div>
       </div>
       <br>
    </div>
    <br><br>
+   <input type="hidden" id="inicio_calendario" value="<?=$tar_periodo_product_info?>" name="">
+   <input type="hidden" id="fim_calendario" value="<?=$tar_periodo_final_product_info?>" name="">
 </div>
 <input type="hidden" id="uri" name="" value="<?=$_SERVER['REQUEST_URI']?>">
 <script src="<?=plugins_url( '../assets/js/mask.js', __FILE__ )?>"></script>
@@ -867,19 +943,7 @@ date_default_timezone_set('America/Sao_Paulo');
          jQuery("#saida").mask('00/00/0000');
    
    	jQuery(document).ready(function(){
-         var date = new Date();
-var currentMonth = date.getMonth();
-var currentDate = date.getDate();
-var currentYear = date.getFullYear();
-  jQuery('#select-delivery-date-input').datepicker({
-    inline: true,
-  startDate: moment(date).add(9,'days'), 
-  endDate: moment(date).add(17,'days'),
-  language: 'pt-BR'
-})
-
-    jQuery(".daterangepicker").addClass('show-calendar'); 
-    jQuery('#select-delivery-date-input').trigger('click')
+         
 
    		    jQuery('.count').prop('disabled', true);
       			jQuery(document).on('click','.plus',function(){

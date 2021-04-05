@@ -9,6 +9,11 @@
    }
 
    jQuery(document).ready(function(){ 
+    
+
+    jQuery(".daterangepicker").addClass('show-calendar'); 
+    jQuery('#select-delivery-date-input').trigger('click')
+
     jQuery("#div_date").show(); 
 
    		    jQuery('.count').prop('disabled', true);
@@ -84,6 +89,52 @@
        	    	});
    
     		});
+
+
+    var date = new Date();
+var currentMonth = date.getMonth();
+var currentDate = date.getDate();
+var currentYear = date.getFullYear();
+  $('#select-delivery-date-input').daterangepicker({
+  startDate: $("#inicio_calendario").val(),
+  minDate: $("#inicio_calendario").val(),
+  endDate: $("#fim_calendario").val(),
+  maxDate: $("#fim_calendario").val(),
+    autoApply: true,
+  singleDatePicker: true,
+  opens: "center", 
+        locale: {
+            format: 'DD/MM/YYYY',
+    "applyLabel": "Aplicar",
+    "cancelLabel": "Cancelar",
+    "fromLabel": "De",
+    "toLabel": "Até",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+        "Dom",
+        "Seg",
+        "Ter",
+        "Qua",
+        "Qui",
+        "Sex",
+        "Sáb"
+    ],
+    "monthNames": [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ],
+        }
+        }); 
 
    var date = new Date();
 var currentMonth = date.getMonth();

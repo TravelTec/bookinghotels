@@ -92,18 +92,17 @@ function scripts_booking_js() {
 
 add_action('admin_init','scripts_booking_js', 1);   
 
-function ttbooking_recomm_css(){
-    wp_enqueue_style( 'style-datepickerj', plugin_dir_url(__FILE__).'assets/css/datepicker.css');  
+function ttbooking_recomm_css(){ 
         wp_enqueue_style('style-ttbooking', plugin_dir_url(__FILE__).'assets/css/style_site.css');  
     wp_enqueue_style( 'style-datepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css'); 
+    wp_enqueue_style( 'style-fotorama', 'https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css'); 
 
         wp_enqueue_script('ttbooking-jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js');
         wp_enqueue_script('ttbooking-sweetalert', 'https://unpkg.com/sweetalert/dist/sweetalert.min.js'); 
     wp_enqueue_script( 'scripts-moment', 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js');
     wp_enqueue_script( 'scripts-datepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js');
         wp_enqueue_script('lttbooking-scripts', plugin_dir_url(__FILE__).'assets/js/scripts_site_ttbooking.js'); 
-    wp_enqueue_script( 'scripts-datepickerj', plugin_dir_url(__FILE__).'assets/js/datepicker.js'); 
-    wp_enqueue_script( 'scripts-datepickerj', plugin_dir_url(__FILE__).'assets/js/datepicker.pt-BR.js'); 
+    wp_enqueue_script( 'scripts-fotorama', 'https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js');
     }
 add_action('wp_head' , 'ttbooking_recomm_css' ); 
 
@@ -396,7 +395,97 @@ function render_add_page_termos() {
 
 }
 
+//init the meta box
+add_action( 'after_setup_theme', 'custom_postimage_setup' );
+function custom_postimage_setup(){
+    add_action( 'add_meta_boxes', 'custom_postimage_meta_box' );
+    add_action( 'save_post', 'custom_postimage_meta_box_save' );
+}
 
+function custom_postimage_meta_box(){
+
+    //on which post types should the box appear?
+    $post_types = array('ttbooking');
+    foreach($post_types as $pt){
+        add_meta_box('custom_postimage_meta_box',__( 'Galeria de imagens', 'yourdomain'),'custom_postimage_meta_box_func',$pt,'normal','high');
+    }
+}
+
+function custom_postimage_meta_box_func($post){ ?>
+
+    <a class="addimage button" onclick="custom_postimage_add_image();" style="margin-bottom: 7px"><?php _e('Adicionar imagens','yourdomain'); ?></a><br>
+
+   <div class="custom_postimage_wrapper" id="custom_postimage_wrapper" style="margin-bottom:20px;">
+        <?php  
+            //an array with all the images (ba meta key). The same array has to be in custom_postimage_meta_box_save($post_id) as well.
+    $meta_keys = array('featured_image0','featured_image1','featured_image2','featured_image3','featured_image4','featured_image5','featured_image6','featured_image7','featured_image8','featured_image9','featured_image10','featured_image11','featured_image12','featured_image13','featured_image14','featured_image15','featured_image16','featured_image17','featured_image18','featured_image19','featured_image20');
+
+    foreach($meta_keys as $meta_key){
+        $image_meta_val=get_post_meta( $post->ID, $meta_key, true); ?>
+            <img src="<?=wp_get_attachment_image_src( $image_meta_val)[0]?>" style="width:200px;" alt=""> <input type="hidden" name="<?=$meta_key?>" id="<?=$meta_key?>" value="<?=$image_meta_val?>" />
+    <?php } ?>
+    </div> 
+
+    <script>
+    function custom_postimage_add_image(){
+
+        var custom_uploader; 
+        //If the uploader object has already been created, reopen the dialog
+        if (custom_uploader) {
+          custom_uploader.open();
+          return;
+        }
+        //Extend the wp.media object
+        custom_uploader = wp.media.frames.file_frame = wp.media({
+          title: 'Selecionar imagens',
+          button: {
+            text: 'Selecionar'
+          },
+          multiple: true
+        });
+        custom_uploader.on('select', function() {
+          var selection = custom_uploader.state().get('selection');
+          var contador = 0;
+          var retorno = '';
+          selection.map( function( attachment ) {
+            attachment = attachment.toJSON();
+
+            retorno += '<img src="'+attachment.url+'" style="width:200px;" alt=""> <input type="hidden" name="featured_image'+contador+'" id="featured_image'+contador+'" value="'+attachment.id+'" /> '; 
+
+            contador++;
+          });
+          jQuery("#custom_postimage_wrapper").append(retorno);
+        });
+        custom_uploader.open(); 
+    }
+
+    function custom_postimage_remove_image(key){
+        var $wrapper = jQuery('#'+key+'_wrapper');
+        $wrapper.find('input#'+key).val('');
+        $wrapper.find('img').hide();
+        $wrapper.find('a.removeimage').hide();
+        return false;
+    }
+    </script>
+    <?php
+    wp_nonce_field( 'custom_postimage_meta_box', 'custom_postimage_meta_box_nonce' );
+}
+
+function custom_postimage_meta_box_save($post_id){
+
+    if ( ! current_user_can( 'edit_posts', $post_id ) ){ return 'not permitted'; } 
+
+    //same array as in custom_postimage_meta_box_func($post)
+    $meta_keys = array('featured_image0','featured_image1','featured_image2','featured_image3','featured_image4','featured_image5','featured_image6','featured_image7','featured_image8','featured_image9','featured_image10','featured_image11','featured_image12','featured_image13','featured_image14','featured_image15','featured_image16','featured_image17','featured_image18','featured_image19','featured_image20');
+    foreach($meta_keys as $meta_key){
+        if(isset($_POST[$meta_key]) && intval($_POST[$meta_key])!=''){
+            update_post_meta( $post_id, $meta_key, intval($_POST[$meta_key]));
+        }else{
+            update_post_meta( $post_id, $meta_key, '');
+        }
+    }
+    
+}
 
 
 /*
@@ -485,23 +574,7 @@ function add_demo_product_type( $types ){
           'type' => 'text'
         )
         );
-     ?></div>
-     <div class='options_group'><?php
-                    
-        woocommerce_wp_select( 
-                array( 
-                    'id'          => 'pre_demo_product_info', 
-                    'label'       => __( 'Tipo de reserva', 'dm_product' ), 
-                    'description' => '', 
-                    'options' => array(
-                        ''   => __( 'Selecione o tipo de reserva...', 'dm_product' ),
-                        'one'   => __( 'Solicitação', 'dm_product' ),
-                        'two'   => __( 'Reserva a confirmar', 'dm_product' ),
-                        'three' => __( 'Reserva online', 'dm_product' )
-                        )
-                    )
-                ); 
-     ?></div>
+     ?></div> 
      <div class='options_group'><?php
                     
         woocommerce_wp_text_input(
