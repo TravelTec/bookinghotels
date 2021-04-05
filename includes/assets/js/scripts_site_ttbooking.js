@@ -99,7 +99,7 @@ var currentYear = date.getFullYear();
   startDate: $("#inicio_calendario").val(),
   minDate: $("#inicio_calendario").val(),
   endDate: $("#fim_calendario").val(),
-  maxDate: $("#fim_calendario").val(),
+  maxDate: $("#fim_calendario").val(), 
     autoApply: true,
   singleDatePicker: true,
   opens: "center", 
@@ -133,8 +133,69 @@ var currentYear = date.getFullYear();
         "Novembro",
         "Dezembro"
     ],
-        }
-        }); 
+        } 
+  });
+
+  function formatReal(numero) {
+    var tmp = numero + '';
+    var neg = false;
+
+    if (tmp - (Math.round(numero)) == 0) {
+        tmp = tmp + '00';        
+    }
+
+    if (tmp.indexOf(".")) {
+        tmp = tmp.replace(".", "");
+    }
+
+    if (tmp.indexOf("-") == 0) {
+        neg = true;
+        tmp = tmp.replace("-", "");
+    }
+
+    if (tmp.length == 1) tmp = "0" + tmp
+
+    tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+
+    if (tmp.length > 6)
+        tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+
+    if (tmp.length > 9)
+        tmp = tmp.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, ".$1.$2,$3");
+
+    if (tmp.length = 12)
+        tmp = tmp.replace(/([0-9]{3}).([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, ".$1.$2.$3,$4");
+
+    if (tmp.length > 12)
+        tmp = tmp.replace(/([0-9]{3}).([0-9]{3}).([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, ".$1.$2.$3.$4,$5");
+
+    if (tmp.indexOf(".") == 0) tmp = tmp.replace(".", "");
+    if (tmp.indexOf(",") == 0) tmp = tmp.replace(",", "0,");
+
+    return (neg ? '-' + tmp : tmp);
+}
+
+  $('#select-delivery-date-input').on('apply.daterangepicker', function(ev, picker) { 
+
+   var d1 = picker.startDate.format('DD/MM/YYYY')+' 00:00:00';
+var d2 = $("#fim_calendario").val()+" 00:00:00";
+var diff = moment(d2,"DD/MM/YYYY HH:mm:ss").diff(moment(d1,"DD/MM/YYYY HH:mm:ss"));
+var dias = (moment.duration(diff).asDays())+1; 
+
+       var price=parseFloat($("#valor_calendario").val()).toFixed(2);
+       var quantity=parseFloat(dias).toFixed(2);
+       var total=parseFloat(price*quantity);
+
+$("#exibicao_valor").html(formatReal(total));
+if (dias > 1) {
+  var exibe_diarias = 'diárias';
+}else{
+  var exibe_diarias = 'diária';
+}
+$("#diarias").html(dias +' '+exibe_diarias);
+
+});
+
 
    var date = new Date();
 var currentMonth = date.getMonth();

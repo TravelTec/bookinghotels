@@ -755,11 +755,9 @@ Licensed under MIT
 }  
 .fotorama__wrap--css3 .fotorama__html, .fotorama__wrap--css3 .fotorama__stage .fotorama__img{
    width: 100% !important;
-}
-.daterangepicker td.active, .daterangepicker td.active:hover, .daterangepicker td.available {
-    background-color: #357ebd;
-    border-color: transparent;
-    color: #fff;
+}   
+.daterangepicker td.available{
+   background-color: #eee
 }
    </style>
    <div class="container">
@@ -784,12 +782,11 @@ Licensed under MIT
              $meta_keys = array('featured_image0','featured_image1','featured_image2','featured_image3','featured_image4','featured_image5','featured_image6','featured_image7','featured_image8','featured_image9','featured_image10','featured_image11','featured_image12','featured_image13','featured_image14','featured_image15','featured_image16','featured_image17','featured_image18','featured_image19','featured_image20');
 
              foreach($meta_keys as $meta_key){
-                 $image_meta_val=get_post_meta( $id, $meta_key, true); 
-                 print_r($image_meta_val);
+                 $image_meta_val=get_post_meta( $id, $meta_key, true);  
 
                  if (!empty($image_meta_val)) { 
                  ?> 
-                     <img src="<?=wp_get_attachment_image_src( $image_meta_val)[0]?>" alt="" style="width: 100%"> 
+                     <a href="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>"><img src="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>" alt=""></a>
                   <?php } ?>
              <?php } ?>
           </div> 
@@ -835,9 +832,9 @@ Licensed under MIT
                                     <strong style="float: left;color: green"><?=$_POST['regime']?></strong><br>
                                 <?php } ?>
                                 <br> 
-                                <?=$_POST['diaria']?>, <?=$_POST['pax']?> 
+                                <span id="diarias"><?=$_POST['diaria']?></span>, <?=$_POST['pax']?> 
                                 <br>
-                                <span style="font-size: 22px"> <?=$_POST['valor']?></span>
+                                <span id="exibicao_valor" style="font-size: 22px"> <?=$_POST['valor']?></span>
                                 <br>
                                 <?=$_POST['taxas']?>
                                 <br>
@@ -931,6 +928,7 @@ date_default_timezone_set('America/Sao_Paulo');
    <br><br>
    <input type="hidden" id="inicio_calendario" value="<?=$tar_periodo_product_info?>" name="">
    <input type="hidden" id="fim_calendario" value="<?=$tar_periodo_final_product_info?>" name="">
+   <input type="hidden" id="valor_calendario" value="<?=str_replace(",", ".", str_replace(".", "", $_POST['valor']))?>" name="">
 </div>
 <input type="hidden" id="uri" name="" value="<?=$_SERVER['REQUEST_URI']?>">
 <script src="<?=plugins_url( '../assets/js/mask.js', __FILE__ )?>"></script>
