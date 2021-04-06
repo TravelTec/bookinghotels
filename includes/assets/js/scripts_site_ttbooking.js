@@ -45,7 +45,7 @@ $('#sandbox-container').daterangepicker({
       }
     remove_drop_destino();
     }).val('');
-    
+
    function show_div_count(){
    jQuery(".dropdown").toggle(500);
 
@@ -280,6 +280,7 @@ if (dias.toFixed(0) > 1) {
   var exibe_diarias = 'diária';
 }
 $("#diarias_exibicao").html(dias.toFixed(0) +' '+exibe_diarias);
+$("#diarias_int").val(dias.toFixed(0));
       }
     }
  
@@ -409,8 +410,24 @@ function exibe_destino(){
 function remove_drop_destino(){ 
       jQuery("#dados").attr("style", "display:none; position: absolute;width: 100%;top: 48px;background-color: #fff;");
 }
-function remove_drop_pax(){ 
+function remove_drop_pax(){  
   jQuery("#valida_campo_destino").attr('style', 'display:none;margin: 0 !important;padding: 3px 10px;font-size: 10px;color: #fff;background-color: #ab0808;top: 34px;position: absolute;z-index: 99999;');
         jQuery("#valida_campo_data").attr('style', 'display:none;margin: 0 !important;padding: 3px 10px;font-size: 10px;color: #fff;background-color: #ab0808;top: 34px;position: absolute;z-index: 99999;');
    jQuery(".dropdown").attr("style", "display:none;position: relative; top:-2px; background-color: #fff; padding: 16px; box-shadow: 0px 0px 5px #868585;z-index: 99999999;width: 100%;");
+}
+
+function send_request_woocommerce(){
+  var idproduto = jQuery("#id_produto").val();
+
+  var wp_ajax_url="<?php echo site_url();?>/wp-admin/admin-ajax.php";
+            var data = {
+                action: 'getCheckoutPageContent',
+                product_id: idproduto,
+                quantity: 1
+            };
+
+            jQuery.post( wp_ajax_url, data, function(content) {
+                window.location.href = '/finalizar-compra';
+
+            });
 }

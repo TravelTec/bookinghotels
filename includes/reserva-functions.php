@@ -103,6 +103,8 @@ function ttbooking_recomm_css(){
     wp_enqueue_script( 'scripts-datepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js');
         wp_enqueue_script('lttbooking-scripts', plugin_dir_url(__FILE__).'assets/js/scripts_site_ttbooking.js'); 
     wp_enqueue_script( 'scripts-fotorama', 'https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js');
+
+    wp_enqueue_script('woocommerce-ajax-add-to-cart', plugin_dir_url(__FILE__) . 'assets/js/ajax-add-to-cart.js', array('jquery'), '', true); 
     }
 add_action('wp_head' , 'ttbooking_recomm_css' ); 
 
@@ -1476,6 +1478,11 @@ function save_tar_product_settings( $post_id ){
 
     update_post_meta( $post_id, 'tar_valor_final_product_info', esc_attr( $tar_valor_final_product_info ) );
     }
+
+    $valor = explode(",", $tar_valor_final_product_info);
+    $value = intval(str_replace(".", "", $valor[0]));
+ 
+    update_post_meta($post_id, '_price', $value); 
         
     $tar_check_crianca_product_info = $_POST['tar_check_crianca_product_info'];
         
@@ -1818,3 +1825,4 @@ function parse_request_sopt_380203( $wp ) {
         require('templates/checkout.php');
     }
 }
+ 

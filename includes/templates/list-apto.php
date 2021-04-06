@@ -875,7 +875,9 @@ Licensed under MIT
                                 <strong style="font-size: 13px;<?=($_POST['qtd_quartos'] <= 5 ? 'color:red' : '')?>"><?=$_POST['qtd_quartos']?> quartos disponíveis</strong>
                                 <br>
                                 <br>
-               <a href="/checkout"><button class="btn btn-primary btn-checkout" style="width: 100%">Reservar</button></a>
+                                <input type="hidden" id="id_produto" value="<?=$id_produto?>" name="">
+                                <input type="hidden" id="diarias_int" value="2" name="">
+              <button class="btn btn-primary btn-checkout single_add_to_cart_button" style="width: 100%">Reservar</button>
             </div>
 
             <br>
