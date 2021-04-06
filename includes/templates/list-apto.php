@@ -136,20 +136,36 @@
 
    }
    
-   $periodo_product_info = get_post_meta( $id_produto, 'periodo_product_info', true );  
-   $tar_periodo_product_info = get_post_meta( $id_produto, 'tar_periodo_product_info', true );   
-   $tar_periodo_final_product_info = get_post_meta( $id_produto, 'tar_periodo_final_product_info', true );
-   $tar_valor_final_product_info = get_post_meta( $id_produto, 'tar_valor_final_product_info', true );
+   $periodo_product_info_inicial = get_post_meta( $id_produto, 'periodo_product_info', true );  
+   $tar_periodo_product_info_inicial = get_post_meta( $id_produto, 'tar_periodo_product_info', true );   
+   $tar_periodo_final_product_info_inicial = get_post_meta( $id_produto, 'tar_periodo_final_product_info', true );
+   $tar_valor_final_product_info_inicial = get_post_meta( $id_produto, 'tar_valor_final_product_info', true ); 
    
-   $periodo_product_info2 = get_post_meta( $id_produto, 'periodo_product_info2', true );  
-   $tar_periodo_product_info2 = get_post_meta( $id_produto, 'tar_periodo_product_info2', true );   
-   $tar_periodo_final_product_info2 = get_post_meta( $id_produto, 'tar_periodo_final_product_info2', true );
-   $tar_valor_final_product_info2 = get_post_meta( $id_produto, 'tar_valor_final_product_info2', true );
+   $periodo_product_info2 = get_post_meta( $id_produto, 'periodo_product_info1', true );  
+   $tar_periodo_product_info2 = get_post_meta( $id_produto, 'tar_periodo_product_info1', true );   
+   $tar_periodo_final_product_info2 = get_post_meta( $id_produto, 'tar_periodo_final_product_info1', true );
+   $tar_valor_final_product_info2 = get_post_meta( $id_produto, 'tar_valor_final_product_info1', true );
    
-   $periodo_product_info3 = get_post_meta( $id_produto, 'periodo_product_info3', true );  
-   $tar_periodo_product_info3 = get_post_meta( $id_produto, 'tar_periodo_product_info3', true );   
-   $tar_periodo_final_product_info3 = get_post_meta( $id_produto, 'tar_periodo_final_product_info3', true ); 
-   $tar_valor_final_product_info3 = get_post_meta( $id_produto, 'tar_valor_final_product_info3', true );
+   $periodo_product_info3 = get_post_meta( $id_produto, 'periodo_product_info2', true );  
+   $tar_periodo_product_info3 = get_post_meta( $id_produto, 'tar_periodo_product_info2', true );   
+   $tar_periodo_final_product_info3 = get_post_meta( $id_produto, 'tar_periodo_final_product_info2', true ); 
+   $tar_valor_final_product_info3 = get_post_meta( $id_produto, 'tar_valor_final_product_info2', true );
+
+   $diarias .= '{ "start": "'.$tar_periodo_product_info_inicial.'", "end": "'.$tar_periodo_final_product_info_inicial.'", "valor": "'.str_replace(",", ".", str_replace(".", "", $tar_valor_final_product_info_inicial)).'" },';  
+   $contador = 0;
+   for ($i=0; $i < 10; $i++) { 
+
+      $tar_periodo_product_info = get_post_meta( $id_produto, 'tar_periodo_product_info'.$i, true ); 
+      $tar_periodo_final_product_info = get_post_meta( $id_produto, 'tar_periodo_final_product_info'.$i, true ); 
+      $tar_valor_final_product_info = get_post_meta( $id_produto, 'tar_valor_final_product_info'.$i, true );  
+      if (!empty(get_post_meta( $id_produto, 'tar_periodo_product_info'.$i, true ))) { 
+
+         $diarias .= '{ "start": "'.$tar_periodo_product_info.'", "end": "'.$tar_periodo_final_product_info.'", "valor": "'.str_replace(",", ".", str_replace(".", "", $tar_valor_final_product_info)).'" },';  
+
+      }
+
+   } 
+      $valores_datas = '['.$diarias.']'; 
    } 
    ?>
 <!-- Blog Section with Sidebar -->
@@ -161,6 +177,7 @@
    height: 250px;}
 </style>
 <div class="page-builder2"> 
+   <input type='hidden' id='diarias' value='[<?=substr($diarias, 0, -1)?>]'>
    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
    <style type="text/css">
       .input-group{
@@ -759,14 +776,27 @@ Licensed under MIT
 .daterangepicker td.available{
    background-color: #eee
 }
+.fotorama__nav-wrap{
+       background-color: #eee;
+}
+.fotorama__nav__frame{
+   padding: 7px !important;
+}
+.fotorama__thumb-border{
+   margin-top: 7px !important
+}
+.daterangepicker .drp-calendar.right {
+   display: none !important;
+}
+
    </style>
    <div class="container">
       <br><br>
       <div class="row justify-content-center font hotel" >
          <div class="col-lg-9 col-12">
             <h3><?= ucwords(str_replace("-", " ", $dados[0])) ?> <small style="font-size: 13px"><?=$localizacao?></small></h3>
-            <div>
-               <button class="btn btn-md btn-primary" style="font-weight: 700"><i class="fa fa-money" style="margin-right: 8px"></i> <?=$tar_valor_final_product_info?> <small style="font-size: 11px;margin-left: 10px;"><?=$periodo_product_info ?></small></button>
+            <div> 
+               <button class="btn btn-md btn-primary" style="font-weight: 700"><i class="fa fa-money" style="margin-right: 8px"></i> <?=$tar_valor_final_product_info_inicial?> <small style="font-size: 11px;margin-left: 10px;"><?=$periodo_product_info_inicial ?></small></button>
                <?php if (!empty($tar_valor_final_product_info2)) { ?>
                <button class="btn btn-md btn-info" style="font-weight: 700"><i class="fa fa-money" style="margin-right: 8px"></i> <?=$tar_valor_final_product_info2?> <small style="font-size: 11px;margin-left: 10px;"><?=$periodo_product_info2?></small></button>
             <?php } ?>
@@ -775,7 +805,9 @@ Licensed under MIT
             <?php } ?>
             </div>
             <br>
-            <div  class="fotorama" data-nav="thumbs">
+            <div  class="fotorama" data-nav="thumbs"
+     data-thumbwidth="90"
+     data-thumbheight="90">
             <img src="<?=$url?>" style="width: 100%"> 
             <?php  
             //an array with all the images (ba meta key). The same array has to be in custom_postimage_meta_box_save($post_id) as well.
@@ -786,7 +818,7 @@ Licensed under MIT
 
                  if (!empty($image_meta_val)) { 
                  ?> 
-                     <a href="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>"><img src="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>" alt=""></a>
+                     <a href="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>"><img src="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>" alt="" width="90" height="90" data-thumbwidth="90" data-thumbheight="90"></a>
                   <?php } ?>
              <?php } ?>
           </div> 
@@ -832,7 +864,8 @@ Licensed under MIT
                                     <strong style="float: left;color: green"><?=$_POST['regime']?></strong><br>
                                 <?php } ?>
                                 <br> 
-                                <span id="diarias"><?=$_POST['diaria']?></span>, <?=$_POST['pax']?> 
+                                <span id="validacao_diaria" style="color:red;display:none"><strong>Período não encontrado.</strong></span>
+                                <span id="diarias_exibicao"><?=$_POST['diaria']?>,</span> <?=$_POST['pax']?> 
                                 <br>
                                 <span id="exibicao_valor" style="font-size: 22px"> <?=$_POST['valor']?></span>
                                 <br>
@@ -842,7 +875,7 @@ Licensed under MIT
                                 <strong style="font-size: 13px;<?=($_POST['qtd_quartos'] <= 5 ? 'color:red' : '')?>"><?=$_POST['qtd_quartos']?> quartos disponíveis</strong>
                                 <br>
                                 <br>
-               <button class="btn btn-primary" style="width: 100%">Reservar</button>
+               <a href="/checkout"><button class="btn btn-primary btn-checkout" style="width: 100%">Reservar</button></a>
             </div>
 
             <br>
@@ -852,8 +885,8 @@ Licensed under MIT
 date_default_timezone_set('America/Sao_Paulo'); 
              ?>
             <h4 style="border-bottom: 1px solid #ddd;padding-bottom: 7px;">PERÍODOS</h4> 
-            <strong><?=$periodo_product_info?></strong><br>
-            <span>De <?= strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_product_info))))) ?> a <?=strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_final_product_info)))))?></span>
+            <strong><?=$periodo_product_info_inicial?></strong><br>
+            <span>De <?= strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_product_info_inicial))))) ?> a <?=strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_final_product_info_inicial)))))?></span>
 
             <?php if (!empty($periodo_product_info2)) { ?>
                <br>
@@ -926,8 +959,8 @@ date_default_timezone_set('America/Sao_Paulo');
       <br>
    </div>
    <br><br>
-   <input type="hidden" id="inicio_calendario" value="<?=$tar_periodo_product_info?>" name="">
-   <input type="hidden" id="fim_calendario" value="<?=$tar_periodo_final_product_info?>" name="">
+   <input type="hidden" id="inicio_calendario" value="<?=$tar_periodo_product_info_inicial?>" name="">
+   <input type="hidden" id="fim_calendario" value="<?=$tar_periodo_final_product_info_inicial?>" name="">
    <input type="hidden" id="valor_calendario" value="<?=str_replace(",", ".", str_replace(".", "", $_POST['valor']))?>" name="">
 </div>
 <input type="hidden" id="uri" name="" value="<?=$_SERVER['REQUEST_URI']?>">

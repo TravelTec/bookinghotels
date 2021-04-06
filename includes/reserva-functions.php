@@ -1798,3 +1798,23 @@ function parse_request_sopt_380202( $wp ) {
         require('templates/list-apto.php');
     }
 }
+
+
+add_action( 'init', 'init_sopt_380203' );
+add_filter( 'query_vars', 'query_vars_sopt_380203' );
+add_action( 'parse_request', 'parse_request_sopt_380203');
+
+function init_sopt_380203() {
+    add_rewrite_rule( 'checkout?', 'index.php?checkout=new', 'top' );
+}
+
+function query_vars_sopt_380203( $query_vars ) {
+    $query_vars[] = 'checkout';
+    return $query_vars;
+}
+
+function parse_request_sopt_380203( $wp ) {
+    if ( array_key_exists( 'checkout', $wp->query_vars ) ) {
+        require('templates/checkout.php');
+    }
+}

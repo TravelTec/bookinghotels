@@ -62,6 +62,7 @@
           jQuery("#crianca7").attr("style", "display:none");
           jQuery("#crianca8").attr("style", "display:none");
           jQuery("#crianca9").attr("style", "display:none"); 
+
    						jQuery('.count_child').val(0);
    				jQuery("#count_criancas").html("<strong>0 criança</strong>");
    					}
@@ -90,6 +91,30 @@
    
     		});
 
+var dados = new Array();
+    var dados_date = new Array();
+    var ranges = jQuery.parseJSON($("#diarias").val()); 
+
+    for(var i=0; i<ranges.length; i++) {
+        start = (ranges[i].start).split("/");
+            end = (ranges[i].end).split("/");
+
+            year_start = start[2];
+            //($inicio[1] == '01' ? 0 : preg_replace("@0+@","",($inicio[1]-1)))
+            month_start = (start[1] == '01' ? 0 : (start[1]-1));
+            //($termino[1] == '01' ? 0 : preg_replace("@0+@","",($termino[1]-1)))
+            day_start = (start[0] < '10' ? start[0].substr(1) : start[0]);
+
+            year_end = end[2];
+            //($inicio[1] == '01' ? 0 : preg_replace("@0+@","",($inicio[1]-1)))
+            month_end = (end[1] == '01' ? 0 : (end[1]-1));
+            //($termino[1] == '01' ? 0 : preg_replace("@0+@","",($termino[1]-1)))
+            day_end = (end[0] < '10' ? end[0].substr(1) : end[0]);
+
+            dados[i] = new Array();
+            dados[i].push(new Date(year_start, month_start, day_start)); 
+            dados[i].push(new Date(year_end, month_end, day_end));  
+    } 
 
     var date = new Date();
 var currentMonth = date.getMonth();
@@ -97,12 +122,14 @@ var currentDate = date.getDate();
 var currentYear = date.getFullYear();
   $('#select-delivery-date-input').daterangepicker({
   startDate: $("#inicio_calendario").val(),
-  minDate: $("#inicio_calendario").val(),
-  endDate: $("#fim_calendario").val(),
-  maxDate: $("#fim_calendario").val(), 
-    autoApply: true,
-  singleDatePicker: true,
-  opens: "center", 
+  minDate: $("#inicio_calendario").val(), 
+    autoApply: true, 
+  linkedCalendars: false,
+  opens: "center",// or monday
+  getValue: function()
+  {
+    return $(this).val();
+  },
         locale: {
             format: 'DD/MM/YYYY',
     "applyLabel": "Aplicar",
@@ -176,26 +203,45 @@ var currentYear = date.getFullYear();
 }
 
   $('#select-delivery-date-input').on('apply.daterangepicker', function(ev, picker) { 
+    var start = $('#select-delivery-date-input').data('daterangepicker').startDate._d; 
+    var end = $('#select-delivery-date-input').data('daterangepicker').endDate._d;
 
-   var d1 = picker.startDate.format('DD/MM/YYYY')+' 00:00:00';
-var d2 = $("#fim_calendario").val()+" 00:00:00";
-var diff = moment(d2,"DD/MM/YYYY HH:mm:ss").diff(moment(d1,"DD/MM/YYYY HH:mm:ss"));
-var dias = (moment.duration(diff).asDays())+1; 
+    var contador = 0;
+
+    for(var i=0; i<dados.length; i++) { 
+      if(moment(dados[i][0],"DD/MM/YYYY") <= moment(start,"DD/MM/YYYY") && moment(dados[i][1],"DD/MM/YYYY") >= moment(end,"DD/MM/YYYY")){
+        contador++;
+
+        $("#validacao_diaria").attr("style", "color:red;display:none");
+        $("#diarias_exibicao").attr("style", "");
+        $("#exibicao_valor").attr("style", "font-size: 22px");
+        $(".btn-checkout").prop("disabled", false);
+
+        var diff = moment(end,"DD/MM/YYYY HH:mm:ss").diff(moment(start,"DD/MM/YYYY HH:mm:ss"));
+var dias = (moment.duration(diff).asDays());  
 
        var price=parseFloat($("#valor_calendario").val()).toFixed(2);
        var quantity=parseFloat(dias).toFixed(2);
        var total=parseFloat(price*quantity);
 
 $("#exibicao_valor").html(formatReal(total));
-if (dias > 1) {
+if (dias.toFixed(0) > 1) {
   var exibe_diarias = 'diárias';
 }else{
   var exibe_diarias = 'diária';
 }
-$("#diarias").html(dias +' '+exibe_diarias);
+$("#diarias_exibicao").html(dias.toFixed(0) +' '+exibe_diarias);
+      }
+    }
+ 
+if (contador == 0) {
+        $("#validacao_diaria").attr("style", "color:red;display:block");
+        $("#diarias_exibicao").attr("style", "display:none");
+        $("#exibicao_valor").attr("style", "font-size: 22px;display:none");
+        $(".btn-checkout").prop("disabled", true);
+}
 
-});
-
+}); 
 
    var date = new Date();
 var currentMonth = date.getMonth();

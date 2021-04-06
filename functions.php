@@ -14,7 +14,7 @@ GitHub Plugin URI: https://github.com/TravelTec/bookinghotels
 
 Description: Voucher Tec - Tarifário de hotéis é um plugin desenvolvido para agências e operadoras de turismo que precisam tratar diárias de hospedagem de várias propriedades simultaneamente.
 
-Version: 1.0.13
+Version: 1.0.14
 
 Author: Travel Tec
 
