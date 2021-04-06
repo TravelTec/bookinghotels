@@ -1,4 +1,51 @@
 
+   var date = new Date();
+var currentMonth = date.getMonth();
+var currentDate = date.getDate();
+var currentYear = date.getFullYear();
+$('#sandbox-container').daterangepicker({
+  startDate: moment(date).add(1,'days'),
+  minDate: moment(date).add(1,'days'),
+        locale: {
+            format: 'DD/MM/YYYY',
+    "applyLabel": "Aplicar",
+    "cancelLabel": "Cancelar",
+    "fromLabel": "De",
+    "toLabel": "Até",
+    "customRangeLabel": "Custom",
+    "daysOfWeek": [
+        "Dom",
+        "Seg",
+        "Ter",
+        "Qua",
+        "Qui",
+        "Sex",
+        "Sáb"
+    ],
+    "monthNames": [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ],
+        } 
+}).on("input change", function (e) { 
+    jQuery('#validar_data').val(e.target.value);
+    }).on("input focus", function (e) { 
+      if (jQuery("#destino_pesquisa").val() == '') {
+        jQuery("#destino").val(''); 
+      }
+    remove_drop_destino();
+    }).val('');
+    
    function show_div_count(){
    jQuery(".dropdown").toggle(500);
 
@@ -91,6 +138,7 @@
    
     		});
 
+if ($("#diarias").val() != '') {
 var dados = new Array();
     var dados_date = new Array();
     var ranges = jQuery.parseJSON($("#diarias").val()); 
@@ -115,6 +163,7 @@ var dados = new Array();
             dados[i].push(new Date(year_start, month_start, day_start)); 
             dados[i].push(new Date(year_end, month_end, day_end));  
     } 
+}
 
     var date = new Date();
 var currentMonth = date.getMonth();
@@ -243,52 +292,6 @@ if (contador == 0) {
 
 }); 
 
-   var date = new Date();
-var currentMonth = date.getMonth();
-var currentDate = date.getDate();
-var currentYear = date.getFullYear();
-$('#sandbox-container').daterangepicker({
-  startDate: moment(date).add(1,'days'),
-  minDate: moment(date).add(1,'days'),
-        locale: {
-            format: 'DD/MM/YYYY',
-    "applyLabel": "Aplicar",
-    "cancelLabel": "Cancelar",
-    "fromLabel": "De",
-    "toLabel": "Até",
-    "customRangeLabel": "Custom",
-    "daysOfWeek": [
-        "Dom",
-        "Seg",
-        "Ter",
-        "Qua",
-        "Qui",
-        "Sex",
-        "Sáb"
-    ],
-    "monthNames": [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ],
-        } 
-}).on("input change", function (e) { 
-    jQuery('#validar_data').val(e.target.value);
-    }).on("input focus", function (e) { 
-      if (jQuery("#destino_pesquisa").val() == '') {
-        jQuery("#destino").val(''); 
-      }
-    remove_drop_destino();
-    }).val('');
 
 function redirect_hotel(){
 
