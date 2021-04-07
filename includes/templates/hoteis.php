@@ -10,6 +10,12 @@
    $chd = $dados[4];
    $qts = $dados[5]; 
 
+   if ($qts > 1) {
+        $quartos = ', '.$qts.' quartos';
+   }else{
+    $quartos = ', '.$qts.' quarto';
+   }
+
    if ($chd == 0) {
        $crianca = '';
        $idades = '';
@@ -45,7 +51,22 @@
    .page-title-section { display: none } 
    .attachment-post-thumbnail{    display: block;
    max-width: 100%;
-   height: 250px;}
+   height: 250px;} 
+.fotorama__wrap--css3 .fotorama__html, .fotorama__wrap--css3 .fotorama__stage .fotorama__img{
+   width: 100% !important;
+}   
+.daterangepicker td.available{
+   background-color: #eee
+}
+.fotorama__nav-wrap{
+       background-color: #eee;
+}
+.fotorama__nav__frame{
+   padding: 7px !important;
+}
+.fotorama__thumb-border{
+   margin-top: 7px !important
+}
 </style>
 <div class="page-builder2"> 
    <div class="page-title-section" style="display: block !important;">
@@ -646,7 +667,7 @@
    while( $_posts1->have_posts() ) : $_posts1->the_post();  
    $post1 = get_post(); 
         if ($post1->ID == $id) {
-            $servicos .= '<i class="fa fa-info" style="font-size: 13px;"></i> <span style="margin-right:8px;margin-left: 6px;margin-top: -4px;font-size: 13px;">'.$term1->name.'</span><br>'; 
+            $servicos .= '<span style="background-color:#eaeaea;padding:5px"><i class="fa fa-info" style="font-size: 13px;"></i> <span style="margin-right:8px;margin-left: 6px;margin-top: -4px;font-size: 13px;">'.$term1->name.'</span></span>'; 
         } 
    endwhile;
    endif; 
@@ -692,14 +713,15 @@
    //regime_product_info
    $regime_product_info = get_post_meta( $id_produto, 'regime_product_info', true ); 
    $check_taxas = get_post_meta( $id_produto, 'check_taxas', true );
-   if ($check_taxas == 'on') {
+        $valor_taxas_exibicao = get_post_meta( $id_produto, 'valor_taxas', true );
+   if ($check_taxas == 'on') { 
        $taxas = 'Valor das taxas inclusas';
    }else{
-        $valor_taxas = get_post_meta( $id_produto, 'valor_taxas', true );
-        $taxas = '+  '.$valor_taxas.' em taxas e impostos';
+        $valor_taxas = get_post_meta( $id_produto, 'valor_taxas', true ); 
+        $taxas = '+ '.get_woocommerce_currency_symbol ().' '.$valor_taxas.' em taxas e impostos';
    } 
    
-   $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))));
+   $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))), "valor_taxas_exibicao" => $valor_taxas_exibicao);
 
 
 
@@ -710,16 +732,18 @@
    $check_taxas = get_post_meta( $id_produto, 'check_taxas'.$i, true );
         $valor_taxas = get_post_meta( $id_produto, 'valor_taxas'.$i, true );
         $tar_periodo_product_info = get_post_meta( $id_produto, 'periodo_product_info'.$i, true );
+        $valor_taxas_exibicao = get_post_meta( $id_produto, 'valor_taxas'.$i, true );
    if ($check_taxas == 'on' || empty($valor_taxas)) {
+    $valor_taxas = 0;
        $taxas = 'Valor das taxas incluso';
    }else{
-        $taxas = '+  '.$valor_taxas.' em taxas e impostos';
+        $taxas = '+ '.get_woocommerce_currency_symbol ().' '.$valor_taxas.' em taxas e impostos';
    } 
    $tar_periodo_inicio_product_info = get_post_meta( $id_produto, 'tar_periodo_product_info'.$i, true ); 
    $tar_periodo_final_product_info = get_post_meta( $id_produto, 'tar_periodo_final_product_info'.$i, true ); 
 
    if (!empty($meta_valor_inicial_acomodacao)) { 
-   $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))));
+   $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))), "valor_taxas_exibicao" => $valor_taxas_exibicao);
 }
 }
 
@@ -741,8 +765,21 @@ $contador = 0;
                   padding: 0 0px 9px 15px;
                   ">
                   <a class="imggallery0 vai" href=""><img src="<?=$apartamentos[$x]['foto']?>" class="img-responsive img-fluid imgHotel" style="margin:11px;display: none"></a>
+                  <div  class="fotorama" data-nav="thumbs" data-thumbwidth="40" data-thumbheight="40" style="margin-top: 12px !important">
                   <img src="<?=$apartamentos[$x]['foto']?>" class="img-responsive img-fluid imgHotel" style="margin-top: 11px;">
-                  <br> 
+                   <?php  
+            //an array with all the images (ba meta key). The same array has to be in custom_postimage_meta_box_save($post_id) as well.
+             $meta_keys = array('featured_image0','featured_image1','featured_image2','featured_image3','featured_image4','featured_image5','featured_image6','featured_image7','featured_image8','featured_image9','featured_image10','featured_image11','featured_image12','featured_image13','featured_image14','featured_image15','featured_image16','featured_image17','featured_image18','featured_image19','featured_image20');
+
+             foreach($meta_keys as $meta_key){
+                 $image_meta_val=get_post_meta( $id, $meta_key, true);  
+
+                 if (!empty($image_meta_val)) { 
+                 ?> 
+                     <a href="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>"><img src="<?=wp_get_attachment_image_src( $image_meta_val, 'full' )[0]?>" alt="" width="90" height="90" data-thumbwidth="90" data-thumbheight="90"></a>
+                  <?php } ?>
+             <?php } ?>
+                    </div>
                </div>
                <div class="col-lg-5 col-xs-12" style="">
                   <h3 class="tituloHotel" style="color: #0069a7!important;font-weight: 400;margin-bottom: 0;font-size: 28px;margin-top:6px"> <?=$apartamentos[$x]['nome_hotel']?> <br class="exibirCelular"></h3>
@@ -754,7 +791,9 @@ $contador = 0;
                   <?php if (!empty($apartamentos[$x]['servicos'])) { ?>
                   <p style="font-weight: 700;font-size: 12px;margin-bottom: 0">SERVIÇOS DO HOTEL </p>
                   <div class="row" style="margin-left: -1px;margin-bottom: 11px;"> 
+                    <p style="line-height: 2.3;">
                      <?=$servicos?>
+                 </p>
                   </div>
                   <?php } ?>
                </div>
@@ -763,17 +802,22 @@ $contador = 0;
                   <p class="exibirComputador" style="margin-bottom: 9px;"><br></p> 
                           <div class="row" style="margin-bottom: 8px;padding-top: 4px;padding-bottom: 3px;">
                              <div class="col-lg-12 col-xs-12 paddingCelular" style="margin-right: -7px;text-align: right;">
-                                <span style="float: left;font-size: 13px"><strong style="font-size: 13px">Período: </strong><?=$apartamentos[$x]['periodo']?></span>
+                                <span style="float: left;font-size: 13px"><strong style="font-size: 13px">Período: </strong><?=str_replace("-", "/", $dados[1]) ?> a <?=str_replace("-", "/", $dados[2])?></span>
                                 <br>
                                 <strong style="float: left"><?=$apartamentos[$x]['acomodacao']?></strong><br>
                                 <?php if (!empty($apartamentos[$x]['regime'])) { ?>
                                     <strong style="float: left;color: green"><?=$apartamentos[$x]['regime']?></strong><br>
                                 <?php } ?>
                                 <br> 
-                                <?=$diaria?>, <?=$pax?>
+                                <?=$diaria?> <br>
+                                <?=$pax?><?=$quartos?>
                                 <?= $idades?>
                                 <br>
-                                <span style="font-size: 22px"> <?=$apartamentos[$x]['valor']?></span>
+                                <?php 
+                                    $valor_diaria = str_replace(",", ".", str_replace(".", "", $apartamentos[$x]['valor']));
+                                    $valor_total_sem_taxa = intval($diferenca_data->days)*floatval($valor_diaria);
+                                ?> 
+                                <span style="font-size: 22px"><?=get_woocommerce_currency_symbol ();?>  <?=number_format($valor_total_sem_taxa, 2, ',', '.') ?></span>
                                 <br>
                                 <?=$apartamentos[$x]['taxas']?>
                                 <br>
@@ -784,13 +828,16 @@ $contador = 0;
                   <br> 
                   <form action="/apto/?param=<?=str_replace(" ", "-", $apartamentos[$x]['acomodacao'])?>;<?=$apartamentos[$x]['id_produto']?>;<?=strtolower(str_replace(" ", "-", $apartamentos[$x]['nome_hotel']))?>" method="POST">
 
-                        <input type="hidden" name="periodo" value="<?=$apartamentos[$x]['periodo']?>">
+                        <input type="hidden" name="periodo" value="<?=str_replace("-", "/", $dados[1]) ?> a <?=str_replace("-", "/", $dados[2])?>">
                         <input type="hidden" name="acomodacao" value="<?=$apartamentos[$x]['acomodacao']?>">
                         <input type="hidden" name="regime" value="<?=$apartamentos[$x]['regime']?>">
                         <input type="hidden" name="diaria" value="<?=$diaria?>">
-                        <input type="hidden" name="pax" value="<?=$pax?>">
-                        <input type="hidden" name="valor" value="<?=$apartamentos[$x]['valor']?>">
+                        <input type="hidden" name="por_dia" value="<?= $apartamentos[$x]['valor']?>">
+                        <input type="hidden" name="pax" value="<?=$pax?><?=$quartos?>"> 
+                        <input type="hidden" name="valor" value="<?=get_woocommerce_currency_symbol ();?> <?=number_format($valor_total_sem_taxa, 2, ',', '.')?>">
+                        <input type="hidden" name="valor_calendario_sem_formatacao" value="<?=$apartamentos[$x]['valor']?>">
                         <input type="hidden" name="taxas" value="<?=$apartamentos[$x]['taxas']?>">
+                        <input type="hidden" name="valor_taxas" value="<?=$apartamentos[$x]['valor_taxas_exibicao']?>">
                         <input type="hidden" name="qtd_quartos" value="<?=$apartamentos[$x]['qtd_quartos']?>"> 
 
                         <button class="btn btn-primary" style="float: right;width: 100%;font-size: 17px;margin-bottom: 14px;"><i class="fas fa-calendar-alt"></i> Ver disponibilidade</button>

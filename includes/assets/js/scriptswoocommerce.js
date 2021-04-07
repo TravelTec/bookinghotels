@@ -28,6 +28,21 @@ jQuery(document).ready(function(){
     jQuery("#tar_qtd_limite8").mask("00");
     jQuery("#tar_qtd_limite9").mask("00");
 
+    jQuery("#tar_periodo_product_info").attr("autocomplete", "off");
+    jQuery("#tar_periodo_final_product_info").attr("autocomplete", "off");
+    jQuery("#tar_periodo_product_info1").attr("autocomplete", "off");
+    jQuery("#tar_periodo_final_product_info1").attr("autocomplete", "off");
+    jQuery("#tar_periodo_product_info2").attr("autocomplete", "off");
+    jQuery("#tar_periodo_final_product_info2").attr("autocomplete", "off");
+    jQuery("#tar_periodo_product_info3").attr("autocomplete", "off");
+    jQuery("#tar_periodo_final_product_info3").attr("autocomplete", "off");
+    jQuery("#tar_periodo_product_info4").attr("autocomplete", "off");
+    jQuery("#tar_periodo_final_product_info4").attr("autocomplete", "off");
+    jQuery("#tar_periodo_product_info5").attr("autocomplete", "off");
+    jQuery("#tar_periodo_final_product_info5").attr("autocomplete", "off");
+    jQuery("#tar_periodo_product_info6").attr("autocomplete", "off");
+    jQuery("#tar_periodo_final_product_info6").attr("autocomplete", "off");
+
     jQuery('.valor').mask('00.000.000,00', {
     reverse: true
 });
@@ -73,6 +88,35 @@ jQuery('#valor_taxas7').mask('00.000.000,00', {
     reverse: true
 }); 
 
+jQuery(document).on('focusout','#tar_valor_final_product_info',function(){
+  if (jQuery('#tar_valor_final_product_info').val() == 0 || jQuery('#tar_valor_final_product_info').val() == '0,00') {
+    alert("O valor da diária não pode ser zerado.");
+  }
+});
+
+jQuery(document).on('focusout','#tar_valor_final_product_info1',function(){
+  if (jQuery('#tar_valor_final_product_info1').val() == 0 || jQuery('#tar_valor_final_product_info1').val() == '0,00') {
+    alert("O valor da diária não pode ser zerado.");
+  }
+});
+
+jQuery(document).on('focusout','#tar_valor_final_product_info2',function(){
+  if (jQuery('#tar_valor_final_product_info2').val() == 0 || jQuery('#tar_valor_final_product_info2').val() == '0,00') {
+    alert("O valor da diária não pode ser zerado.");
+  }
+});
+
+jQuery(document).on('focusout','#tar_valor_final_product_info3',function(){
+  if (jQuery('#tar_valor_final_product_info3').val() == 0 || jQuery('#tar_valor_final_product_info3').val() == '0,00') {
+    alert("O valor da diária não pode ser zerado.");
+  }
+});
+
+jQuery(document).on('focusout','#tar_valor_final_product_info4',function(){
+  if (jQuery('#tar_valor_final_product_info4').val() == 0 || jQuery('#tar_valor_final_product_info4').val() == '0,00') {
+    alert("O valor da diária não pode ser zerado.");
+  }
+});
 
 }); 
 
@@ -138,11 +182,17 @@ function adicionar_tarifa(){
       minDate: new Date(),
       autoClose: true,
       dateFormat: 'dd/mm/yy',
+        onSelect: function (selectedDate) {
+            //Limpamos a segunda data, para evitar problemas do usuário ficar trocando a data do primeiro datepicker e acabar burlando as regras definidas.
+            jQuery.datepicker._clearDate(jQuery("#tar_periodo_final_product_info"+iti_index));
+            //Aqui está a "jogada" para somar os 7 dias para o próximo datepicker.
+            var data = jQuery.datepicker.parseDate('dd/mm/yy', selectedDate); 
+            jQuery("#tar_periodo_final_product_info"+iti_index).datepicker("option", "minDate", data); //Aplica a data
+        }
     });
     jQuery('#tar_periodo_final_product_info'+iti_index)
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -177,8 +227,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -203,8 +252,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info1')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -229,8 +277,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info2')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -256,8 +303,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info3')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -282,8 +328,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info4')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -308,8 +353,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info5')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -334,8 +378,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info6')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });
@@ -354,8 +397,7 @@ jQuery(function() {
     });
     jQuery('#tar_periodo_final_product_info7')
     .datepicker({
-      language: 'pt-BR',
-      minDate: new Date(),
+      language: 'pt-BR', 
       autoClose: true,
       dateFormat: 'dd/mm/yy',
     });

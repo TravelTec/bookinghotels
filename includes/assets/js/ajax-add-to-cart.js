@@ -10,6 +10,6 @@ $('.single_add_to_cart_button').click(function(e) {
 
        function addToCart(p_id, quantity) {
           $.get('/?post_type=product&add-to-cart=' + p_id +'&quantity=' + quantity, function(response) {
-            	window.location.href = '/carrinho';
+            	window.location.href = '/finalizar-compra';
           });
        }

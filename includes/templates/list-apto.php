@@ -1,5 +1,14 @@
 <?php 
    get_header(); 
+
+   session_start();
+
+   global $woocommerce;
+      $woocommerce->cart->empty_cart();
+
+      $_SESSION['teste'] = $_POST['periodo'];
+
+   $_SESSION['valor_taxas'] = $_POST['valor_taxas'];
    
    $dados = explode(";", $_GET['param']);  
    
@@ -848,16 +857,21 @@ Licensed under MIT
             <div style="text-align: center;"> 
                <h5 style="margin: 13px"><strong>Valores</strong></h5>
                <div style="height: 50px;background-color: #c9f3e1;padding: 15px 0px;">
-                  <h4><strong><?=$_POST['valor']?></strong> <small style="font-size: 13px">por dia</small></h4>
+                  <h4><strong><?=get_woocommerce_currency_symbol ();?> <?=$_POST['por_dia']?></strong> <small style="font-size: 13px">por dia</small></h4>
                   <br>
                   <div id="div_date">
-                     <div id="select-delivery-date-input" style="height: 2px;border: none"></div>
+                     <input type="text" id="select-delivery-date-input" style="height: 2px;border: none;color:#fff"> 
                   </div>
                </div>
             </div>
  
-            <div style="text-align: right;margin-top: 120%;padding: 0px 10px;">
+            <div style="text-align: right;margin-top: 125%;padding: 0px 10px;">
                <span style="float: left;font-size: 13px"><strong style="font-size: 13px">Período: </strong><?=$_POST['periodo']?></span>
+                                <?php $woocommerce_currency = get_post_meta( $id_produto, 'woocommerce_currency', true);   ?>
+               <?php 
+
+                  $_SESSION['texto_descritivo'] = '<br><strong style="float: left;font-size: 17px;">'.$_POST['acomodacao'].'</strong><br><strong style="float: left;color: green;font-weight: 500;">'.$_POST['regime'].'</strong><br><span style="font-weight: 500;">'.$_POST['pax'].'</span><br>';
+                ?>
                                 <br>
                                 <strong style="float: left"><?=$_POST['acomodacao']?></strong><br>
                                 <?php if (!empty($_POST['regime'])) { ?>
@@ -865,9 +879,10 @@ Licensed under MIT
                                 <?php } ?>
                                 <br> 
                                 <span id="validacao_diaria" style="color:red;display:none"><strong>Período não encontrado.</strong></span>
-                                <span id="diarias_exibicao"><?=$_POST['diaria']?>,</span> <?=$_POST['pax']?> 
+                                <span id="diarias_exibicao"><?=$_POST['diaria']?></span> <br><?=$_POST['pax']?> 
                                 <br>
-                                <span id="exibicao_valor" style="font-size: 22px"> <?=$_POST['valor']?></span>
+                                <?php $woocommerce_currency = get_post_meta( $id_produto, 'woocommerce_currency', true);   ?>
+                                <span id="exibicao_valor" style="font-size: 22px"> <?=$woocommerce_currency?> <?=$_POST['valor']?></span>
                                 <br>
                                 <?=$_POST['taxas']?>
                                 <br>
@@ -963,7 +978,8 @@ date_default_timezone_set('America/Sao_Paulo');
    <br><br>
    <input type="hidden" id="inicio_calendario" value="<?=$tar_periodo_product_info_inicial?>" name="">
    <input type="hidden" id="fim_calendario" value="<?=$tar_periodo_final_product_info_inicial?>" name="">
-   <input type="hidden" id="valor_calendario" value="<?=str_replace(",", ".", str_replace(".", "", $_POST['valor']))?>" name="">
+   <input type="hidden" id="valor_calendario" value="<?=str_replace(",", ".", str_replace(".", "", $_POST['valor_calendario_sem_formatacao']))?>" name="">
+   <input type="hidden" id="currency" value="<?=get_woocommerce_currency_symbol ();?>" name="">
 </div>
 <input type="hidden" id="uri" name="" value="<?=$_SERVER['REQUEST_URI']?>">
 <script src="<?=plugins_url( '../assets/js/mask.js', __FILE__ )?>"></script>

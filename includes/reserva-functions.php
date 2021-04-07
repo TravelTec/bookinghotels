@@ -1,6 +1,6 @@
 <?php 
 
-
+session_start();
 
 /*
 
@@ -743,6 +743,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data inicial',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -755,6 +756,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data final',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -779,6 +781,7 @@ function add_demo_product_type( $types ){
           'placeholder' => '0,00',
           'desc_tip' => 'false',
           'description' => '',
+          'custom_attributes' => array( 'required' => 'required' ),
           'type' => 'text',
           'class' => 'valor'
         )
@@ -787,7 +790,7 @@ function add_demo_product_type( $types ){
 </td>  
 
             <td style="">
-                <p class="padding:0"><input type="checkbox" id="check_taxas" name="check_taxas" <?=($check_taxas == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas" name="valor_taxas" value="<?=$valor_taxas?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas" name="check_taxas" <?=($check_taxas == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas" name="valor_taxas" value="<?=$valor_taxas?>"></p>
             </td>
 <td>   
     <?php
@@ -858,6 +861,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data inicial',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -870,6 +874,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data final',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -894,6 +899,7 @@ function add_demo_product_type( $types ){
           'label' => '',
           'placeholder' => '0,00',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text',
           'class' => 'valor'
@@ -903,7 +909,7 @@ function add_demo_product_type( $types ){
 </td>  
 
             <td style="">
-                <p class="padding:0"><input type="checkbox" id="check_taxas1" name="check_taxas1" <?=($check_taxas1 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa1()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas1 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas1" name="valor_taxas1" value="<?=$valor_taxas1?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas1" name="check_taxas1" <?=($check_taxas1 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa1()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas1 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas1" name="valor_taxas1" value="<?=$valor_taxas1?>"></p>
             </td>
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info1" name="tar_check_crianca_product_info1" <?=($tar_check_crianca_product_info1 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info1" name="tar_idade_crianca_product_info1" value="<?=$tar_idade_crianca_product_info1?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -921,6 +927,7 @@ function add_demo_product_type( $types ){
                     'label'       => '', 
                     'description' => '',
                     'value'       => $regime_product_info,
+          'custom_attributes' => array( 'required' => 'required' ),
                     'options' => $options 
                     )
                 ); 
@@ -949,6 +956,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data inicial',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -961,6 +969,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data final',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -985,6 +994,7 @@ function add_demo_product_type( $types ){
           'label' => '',
           'placeholder' => '0,00',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text',
           'class' => 'valor'
@@ -994,7 +1004,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p class="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas2" <?=($check_taxas2 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa2()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas2 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas2" name="valor_taxas2" value="<?=$valor_taxas2?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas2" <?=($check_taxas2 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa2()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas2 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas2" name="valor_taxas2" value="<?=$valor_taxas2?>"></p>
             </td> 
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info2" name="tar_check_crianca_product_info2" <?=($tar_check_crianca_product_info2 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info2" name="tar_idade_crianca_product_info2" value="<?=$tar_idade_crianca_product_info2?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1012,6 +1022,7 @@ function add_demo_product_type( $types ){
                     'label'       => '', 
                     'description' => '',
                     'value'       => $regime_product_info,
+          'custom_attributes' => array( 'required' => 'required' ),
                     'options' => $options 
                     )
                 ); 
@@ -1040,6 +1051,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data inicial',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1052,6 +1064,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data final',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1076,6 +1089,7 @@ function add_demo_product_type( $types ){
           'label' => '',
           'placeholder' => '0,00',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text',
           'class' => 'valor'
@@ -1085,7 +1099,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p class="padding:0"><input type="checkbox" id="check_taxas3" name="check_taxas3" <?=($check_taxas3 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa3()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas3 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas3" name="valor_taxas3" value="<?=$valor_taxas3?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas3" name="check_taxas3" <?=($check_taxas3 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa3()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas3 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas3" name="valor_taxas3" value="<?=$valor_taxas3?>"></p>
             </td>  
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info3" name="tar_check_crianca_product_info3" <?=($tar_check_crianca_product_info3 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info3" name="tar_idade_crianca_product_info3" value="<?=$tar_idade_crianca_product_info3?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1103,6 +1117,7 @@ function add_demo_product_type( $types ){
                     'label'       => '', 
                     'description' => '',
                     'value'       => $regime_product_info,
+          'custom_attributes' => array( 'required' => 'required' ),
                     'options' => $options 
                     )
                 ); 
@@ -1131,6 +1146,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data inicial',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1143,6 +1159,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data final',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1167,6 +1184,7 @@ function add_demo_product_type( $types ){
           'label' => '',
           'placeholder' => '0,00',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text',
           'class' => 'valor'
@@ -1176,7 +1194,7 @@ function add_demo_product_type( $types ){
 </td>  
 
             <td style="">
-                <p class="padding:0"><input type="checkbox" id="check_taxas4" name="check_taxas2" <?=($check_taxas4 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa4()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas4 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas4" name="valor_taxas4" value="<?=$valor_taxas4?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas4" name="check_taxas2" <?=($check_taxas4 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa4()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas4 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas4" name="valor_taxas4" value="<?=$valor_taxas4?>"></p>
             </td> 
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info4" name="tar_check_crianca_product_info4" <?=($tar_check_crianca_product_info4 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info4" name="tar_idade_crianca_product_info4" value="<?=$tar_idade_crianca_product_info4?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1194,6 +1212,7 @@ function add_demo_product_type( $types ){
                     'label'       => '', 
                     'description' => '',
                     'value'       => $regime_product_info,
+          'custom_attributes' => array( 'required' => 'required' ),
                     'options' => $options 
                     )
                 ); 
@@ -1222,6 +1241,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data inicial',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1234,6 +1254,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data final',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1258,6 +1279,7 @@ function add_demo_product_type( $types ){
           'label' => '',
           'placeholder' => '0,00',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text',
           'class' => 'valor'
@@ -1267,7 +1289,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p class="padding:0"><input type="checkbox" id="check_taxas5" name="check_taxas5" <?=($check_taxas5 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa5()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas5 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas5" name="valor_taxas5" value="<?=$valor_taxas5?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas5" name="check_taxas5" <?=($check_taxas5 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa5()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas5 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas5" name="valor_taxas5" value="<?=$valor_taxas5?>"></p>
             </td>  
 
 <td>   
@@ -1286,6 +1308,7 @@ function add_demo_product_type( $types ){
                     'label'       => '', 
                     'description' => '',
                     'value'       => $regime_product_info,
+          'custom_attributes' => array( 'required' => 'required' ),
                     'options' => $options 
                     )
                 ); 
@@ -1317,6 +1340,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data inicial',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1329,6 +1353,7 @@ function add_demo_product_type( $types ){
           'label' => 'Data final',
           'placeholder' => 'dd/mm/yyyy',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text'
         )
@@ -1353,6 +1378,7 @@ function add_demo_product_type( $types ){
           'label' => '',
           'placeholder' => '0,00',
           'desc_tip' => 'false',
+          'custom_attributes' => array( 'required' => 'required' ),
           'description' => '',
           'type' => 'text',
           'class' => 'valor'
@@ -1362,7 +1388,7 @@ function add_demo_product_type( $types ){
 </td>  
 
 <td style="">
-                <p class="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas{{(data.key)}}" checked onclick="toggle_input_valor_taxa{{(data.key)}}()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;display: none" class="" id="valor_taxas{{(data.key)}}" name="valor_taxas{{(data.key)}}" value=""></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas{{(data.key)}}" checked onclick="toggle_input_valor_taxa{{(data.key)}}()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;display: none" class="" id="valor_taxas{{(data.key)}}" name="valor_taxas{{(data.key)}}" value=""></p>
             </td> 
 
 <td>   
@@ -1380,6 +1406,7 @@ function add_demo_product_type( $types ){
                     'id'          => 'regime_product_info{{(data.key)}}', 
                     'label'       => '', 
                     'description' => '', 
+          'custom_attributes' => array( 'required' => 'required' ),
                     'options' => $options 
                     )
                 ); 
@@ -1802,6 +1829,8 @@ function query_vars_sopt_380202( $query_vars ) {
 
 function parse_request_sopt_380202( $wp ) {
     if ( array_key_exists( 'apto', $wp->query_vars ) ) {
+        global $woocommerce;
+        $woocommerce->cart->empty_cart();
         require('templates/list-apto.php');
     }
 }
@@ -1825,4 +1854,50 @@ function parse_request_sopt_380203( $wp ) {
         require('templates/checkout.php');
     }
 }
- 
+
+function prefix_add_discount_line( $cart ) { 
+    $valor_taxa5 = floatval(str_replace(",", ".", $_SESSION['valor_taxas']));
+
+  $discount = $cart->subtotal * $valor_taxa5;
+
+  $cart->add_fee( __( 'Taxas', 'yourtext-domain' ) , $_SESSION['valor_taxas'] );
+
+}
+add_action( 'woocommerce_cart_calculate_fees', 'prefix_add_discount_line' ); 
+
+function remove_quantity_text( $cart_item, $cart_item_key ) {
+   $product_quantity= '';
+   return $product_quantity;
+}
+
+add_filter ('woocommerce_checkout_cart_item_quantity', 'remove_quantity_text', 10, 2 );
+
+add_action( 'woocommerce_before_calculate_totals', 'custom_cart_items_prices', 10, 1 );
+function custom_cart_items_prices( $cart ) {
+
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+
+    if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 )
+        return;
+
+    // Loop through cart items
+    foreach ( $cart->get_cart() as $cart_item ) {
+
+        // Get an instance of the WC_Product object
+        $product = $cart_item['data']; 
+        $quantity =  $cart_item['quantity']; 
+
+        // Get the product name (Added Woocommerce 3+ compatibility)
+        $original_name = method_exists( $product, 'get_name' ) ? $product->get_name() : $product->post->post_title;
+
+        // SET THE NEW NAME
+        $new_name = $product->post->post_title.' <br>'.$_SESSION['texto_descritivo'].' '.$quantity.' diárias <br>'.$_SESSION['teste'];
+
+        // Set the new name (WooCommerce versions 2.5.x to 3+)
+        if( method_exists( $product, 'set_name' ) )
+            $product->set_name( $new_name );
+        else
+            $product->post->post_title = $new_name;
+    }
+}

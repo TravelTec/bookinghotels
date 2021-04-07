@@ -5,7 +5,7 @@ var currentDate = date.getDate();
 var currentYear = date.getFullYear();
 $('#sandbox-container').daterangepicker({
   startDate: moment(date).add(1,'days'),
-  minDate: moment(date).add(1,'days'),
+  minDate: moment(date).add(1,'days'), 
         locale: {
             format: 'DD/MM/YYYY',
     "applyLabel": "Aplicar",
@@ -273,7 +273,7 @@ var dias = (moment.duration(diff).asDays());
        var quantity=parseFloat(dias).toFixed(2);
        var total=parseFloat(price*quantity);
 
-$("#exibicao_valor").html(formatReal(total));
+$("#exibicao_valor").html($("#currency").val()+' '+formatReal(total));
 if (dias.toFixed(0) > 1) {
   var exibe_diarias = 'diárias';
 }else{
@@ -281,6 +281,16 @@ if (dias.toFixed(0) > 1) {
 }
 $("#diarias_exibicao").html(dias.toFixed(0) +' '+exibe_diarias);
 $("#diarias_int").val(dias.toFixed(0));
+
+$.ajax({
+    type: "POST",
+    url: "/wp-content/plugins/bookinghotels/includes/ajax-periodo.php",
+    data: {start:moment(start).format('MM/DD/YYYY'), end:moment(end).format('MM/DD/YYYY')}, 
+    success: function(result){ 
+        console.log(result);
+    }
+});
+
       }
     }
  
