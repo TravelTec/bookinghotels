@@ -47,6 +47,16 @@ class TTBookingAdmin extends TTBooking {
 			'cor_fundo_texto' => '',
 			'cor_bordas' => '',
 			'cor_botao' => '',
+			'chechbox_motor0' => '',
+			'chechbox_motor1' => '',
+			'chechbox_motor2' => '',
+			'chechbox_motor3' => '',
+			'chechbox_motor4' => '',
+			'chechbox_motor5' => '',
+			'chechbox_motor6' => '',
+			'chechbox_motor7' => '',
+			'chechbox_motor8' => '',
+			'chechbox_motor9' => '',
 		);
 		if ( ! $this->options ) {
 			$this->options = $defaults;

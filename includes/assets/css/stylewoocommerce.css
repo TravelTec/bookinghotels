@@ -27,3 +27,12 @@
     margin-left: 16% !important;
     margin-top: -3% !important;
 }
+
+#regime_product_info, #regime_product_info1, #regime_product_info2, #regime_product_info3, #regime_product_info4, #regime_product_info5{
+    position: relative !important;
+    z-index: 999999999999;
+}
+
+#ui-datepicker-div{
+        z-index: 9999999999999999 !important;
+}

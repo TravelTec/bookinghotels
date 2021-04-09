@@ -101,7 +101,9 @@
    }   
 				?>  
 
-				<?php for ($i=0; $i < count($propriedades); $i++) {  ?>
+				<?php for ($i=0; $i < count($propriedades); $i++) { 
+
+				 ?>
  
 				<div id="shortcode">
 					<span><input type="text" value='[TTBOOKING_MOTOR_RESERVA propriedade="<?=$propriedades[$i]['tipo_propriedade']?>"]' id="myInput<?=$i?>" style="width: 51.2%;background-color: #ddd;font-weight: 700;border: none;cursor: not-allowed;color:#72777c;" onclick="copy_text_shortcode<?=$i?>()" placeholder="<?=$shortcode?>"> <button onclick="copy_text_shortcode<?=$i?>()" class="button button-secondary btn_copy_text<?=$i?>">Copiar</button> </span>
@@ -114,6 +116,14 @@
 						<td>
 							<textarea class="regular-text" name="config_ttbooking[texto_motor<?=$i?>]" value="<?php esc_attr_e( $this->get_option( 'texto_motor'.$i ) ); ?>" placeholder="" style="height:125px"><?php esc_attr_e( $this->get_option( 'texto_motor'.$i ) ); ?></textarea> 
 							<p class="description"><?php _e( 'A mensagem que será exibida para o bloco do motor.', 'config_ttbooking' ); ?></p>
+						</td>
+					</tr>  
+					<tr valign="top" class="config_ttbooking-smtp">
+						<th scope="row">
+							 
+						</th>
+						<td>
+							<input type="checkbox" name="config_ttbooking[chechbox_motor<?=$i?>]" id="config_ttbooking[chechbox_motor<?=$i?>]" <?= ($this->get_option( 'chechbox_motor'.$i ) == 'on' ? 'checked' : '') ?>> Não incluir na pesquisa o campo de localização
 						</td>
 					</tr>  
 				</table>
@@ -208,6 +218,8 @@
 
 			function copy_text_shortcode1() { 
 
+			jQuery("form").submit(function(e){ return false; });
+
 			  jQuery("#myInput1").select();  
 			  document.execCommand("copy");
 
@@ -222,6 +234,8 @@
 			} 
 
 			function copy_text_shortcode2() { 
+
+			jQuery("form").submit(function(e){ return false; });
 
 			  jQuery("#myInput2").select();  
 			  document.execCommand("copy");
@@ -238,6 +252,8 @@
 
 			function copy_text_shortcode3() { 
 
+			jQuery("form").submit(function(e){ return false; });
+
 			  jQuery("#myInput3").select();  
 			  document.execCommand("copy");
 
@@ -253,6 +269,8 @@
 
 			function copy_text_shortcode4() { 
 
+			jQuery("form").submit(function(e){ return false; });
+
 			  jQuery("#myInput4").select();  
 			  document.execCommand("copy");
 
@@ -267,6 +285,8 @@
 			} 
 
 			function copy_text_shortcode5() { 
+
+			jQuery("form").submit(function(e){ return false; });
 
 			  jQuery("#myInput5").select();  
 			  document.execCommand("copy");

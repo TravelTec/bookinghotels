@@ -617,6 +617,10 @@ function add_demo_product_type( $types ){
     function est_product_tab_product_tab_content() {
 
      ?><div id='est_product_options' class='panel woocommerce_options_panel'><?php
+        $idpost = $_GET['post'];  
+
+
+        $est_product_info = get_post_meta( $idpost, 'est_product_info', true ); 
                     
         $query = new WP_Query( array( 'post_type' => 'ttbooking' ) );
         $posts = $query->posts; 
@@ -634,7 +638,7 @@ function add_demo_product_type( $types ){
                     'id'          => 'est_product_info', 
                     'label'       => __( 'Estabelecimento', 'est_product' ), 
                     'description' => '',
-                    'value'       => '',
+                    'value'       => $est_product_info,
                     'options' => $options 
                     )
                 ); 
@@ -790,7 +794,7 @@ function add_demo_product_type( $types ){
 </td>  
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas" name="check_taxas" <?=($check_taxas == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas" name="valor_taxas" value="<?=$valor_taxas?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas" name="check_taxas" <?=($check_taxas == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas" name="valor_taxas" value="<?=$valor_taxas?>" placeholder="0,00"></p>
             </td>
 <td>   
     <?php
@@ -909,7 +913,7 @@ function add_demo_product_type( $types ){
 </td>  
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas1" name="check_taxas1" <?=($check_taxas1 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa1()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas1 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas1" name="valor_taxas1" value="<?=$valor_taxas1?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas1" name="check_taxas1" <?=($check_taxas1 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa1()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas1 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas1" name="valor_taxas1" value="<?=$valor_taxas1?>" placeholder="0,00"></p>
             </td>
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info1" name="tar_check_crianca_product_info1" <?=($tar_check_crianca_product_info1 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info1" name="tar_idade_crianca_product_info1" value="<?=$tar_idade_crianca_product_info1?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1004,7 +1008,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas2" <?=($check_taxas2 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa2()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas2 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas2" name="valor_taxas2" value="<?=$valor_taxas2?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas2" <?=($check_taxas2 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa2()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas2 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas2" name="valor_taxas2" value="<?=$valor_taxas2?>" placeholder="0,00"></p>
             </td> 
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info2" name="tar_check_crianca_product_info2" <?=($tar_check_crianca_product_info2 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info2" name="tar_idade_crianca_product_info2" value="<?=$tar_idade_crianca_product_info2?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1099,7 +1103,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas3" name="check_taxas3" <?=($check_taxas3 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa3()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas3 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas3" name="valor_taxas3" value="<?=$valor_taxas3?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas3" name="check_taxas3" <?=($check_taxas3 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa3()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas3 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas3" name="valor_taxas3" value="<?=$valor_taxas3?>" placeholder="0,00"></p>
             </td>  
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info3" name="tar_check_crianca_product_info3" <?=($tar_check_crianca_product_info3 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info3" name="tar_idade_crianca_product_info3" value="<?=$tar_idade_crianca_product_info3?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1194,7 +1198,7 @@ function add_demo_product_type( $types ){
 </td>  
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas4" name="check_taxas2" <?=($check_taxas4 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa4()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas4 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas4" name="valor_taxas4" value="<?=$valor_taxas4?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas4" name="check_taxas2" <?=($check_taxas4 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa4()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas4 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas4" name="valor_taxas4" value="<?=$valor_taxas4?>" placeholder="0,00"></p>
             </td> 
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info4" name="tar_check_crianca_product_info4" <?=($tar_check_crianca_product_info4 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info4" name="tar_idade_crianca_product_info4" value="<?=$tar_idade_crianca_product_info4?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1289,7 +1293,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas5" name="check_taxas5" <?=($check_taxas5 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa5()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;<?=($check_taxas5 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas5" name="valor_taxas5" value="<?=$valor_taxas5?>"></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas5" name="check_taxas5" <?=($check_taxas5 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa5()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas5 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas5" name="valor_taxas5" value="<?=$valor_taxas5?>" placeholder="0,00"></p>
             </td>  
 
 <td>   
@@ -1388,7 +1392,7 @@ function add_demo_product_type( $types ){
 </td>  
 
 <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas{{(data.key)}}" checked onclick="toggle_input_valor_taxa{{(data.key)}}()"> Taxas inclusas <input type="text" style="width: 6.5%;margin: 0px 5px;position: absolute;display: none" class="" id="valor_taxas{{(data.key)}}" name="valor_taxas{{(data.key)}}" value=""></p>
+                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas{{(data.key)}}" checked onclick="toggle_input_valor_taxa{{(data.key)}}()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;display: none" class="" id="valor_taxas{{(data.key)}}" name="valor_taxas{{(data.key)}}" value="" placeholder="0,00"></p>
             </td> 
 
 <td>   

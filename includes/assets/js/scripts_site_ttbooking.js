@@ -333,8 +333,13 @@ function redirect_hotel(){
 
 
       jQuery("#dados").attr("style", "display:none; position: absolute;width: 100%;top: 48px;background-color: #fff;"); 
-   jQuery(".dropdown").attr("style", "display:none;position: relative; top:-2px; background-color: #fff; padding: 16px; box-shadow: 0px 0px 5px #868585;z-index: 99999999;width: 100%;");
+   jQuery(".dropdown").attr("style", "display:none;position: relative; top:-2px; background-color: #fff; padding: 16px; box-shadow: 0px 0px 5px #868585;z-index: 99999999;width: 100%;"); 
+
+if (jQuery("#chechbox_motor").val() == "on") {
+  window.location.href = '/hoteis?param='+jQuery("#hotelaria_motor").val()+';'+data_inicio+';'+data_final+';'+adt+';'+chd+';'+qts+';'+idade1+'-'+idade2+'-'+idade3+'-'+idade4+'-'+idade5+'-'+idade6+';'+jQuery("#tipo_motor").val();
+  }else{
   window.location.href = '/hoteis?param='+destino+';'+data_inicio+';'+data_final+';'+adt+';'+chd+';'+qts+';'+idade1+'-'+idade2+'-'+idade3+'-'+idade4+'-'+idade5+'-'+idade6+';'+propriedade;
+}
 }
 }
 
