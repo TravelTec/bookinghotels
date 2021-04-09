@@ -136,14 +136,8 @@
    $query = new WP_Query( $query_args );
    
    $apartamentos = [];
-   
-   if ( $query->posts ) {
-   foreach ( $query->posts as $key => $post_id ) { 
-   $nome_apartamento = $post_id->post_title;
-   $id_produto = $post_id->ID;
-
-
-   }
+     
+   $id_produto = $dados[1];
    
    $periodo_product_info_inicial = get_post_meta( $id_produto, 'periodo_product_info', true );  
    $tar_periodo_product_info_inicial = get_post_meta( $id_produto, 'tar_periodo_product_info', true );   
@@ -175,7 +169,7 @@
 
    } 
       $valores_datas = '['.$diarias.']'; 
-   } 
+    
    ?>
 <!-- Blog Section with Sidebar -->
 <style type="text/css"> 
