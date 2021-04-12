@@ -10,6 +10,9 @@
    $chd = $dados[4];
    $qts = $dados[5]; 
 
+   $pax_pesquisa_inicial = $adt;
+   $pax_pesquisa_total = intval($adt)+intval($chd);
+
    if ($qts > 1) {
         $quartos = ', '.$qts.' quartos';
    }else{
@@ -31,6 +34,7 @@
         $idades .= 'Criança '.($i+1).': '.$valor_idades[$i].' '.($valor_idades[$i] == 1 ? 'ano' : 'anos').'<br>';
     } 
    }
+   $idade_crianca = ($valor_idades[0] >= '10' ? $valor_idades[0] : str_replace("0", "", $valor_idades[0]));
    $pax = $adt.' '.($adt > 1 ? 'adultos' : 'adulto').' '.$crianca;
    $propriedade = $dados[7]; 
 
@@ -42,7 +46,7 @@
     if ($diferenca_data->days == 1) {
         $diaria = '1 diária';
     }else{
-        $diaria = $diferenca_data->days.' diárias';
+        $diaria = (intval($diferenca_data->days)+1).' diárias';
     }
 ?>
 <!-- Blog Section with Sidebar -->
@@ -623,6 +627,7 @@
                while( $_posts->have_posts() ) : $_posts->the_post();  
                $post = get_post();  
                $title = $post->post_title;
+               $slug = $post->post_name;
                $id = $post->ID;  
     $description = $post->post_content; 
    
@@ -645,6 +650,7 @@
    );
    
    if( $cat_terms1 ){
+      $contador = 0;
    
    foreach( $cat_terms1 as $term1 ) { 
    
@@ -667,7 +673,12 @@
    while( $_posts1->have_posts() ) : $_posts1->the_post();  
    $post1 = get_post(); 
         if ($post1->ID == $id) {
-            $servicos .= '<span style="background-color:#eaeaea;padding:5px"><i class="fa fa-info" style="font-size: 13px;"></i> <span style="margin-right:8px;margin-left: 6px;margin-top: -4px;font-size: 13px;">'.$term1->name.'</span></span>'; 
+
+            $contador++;
+            $servicos .= ' <span style="background-color:#eaeaea;padding:5px;"><i class="fa fa-info" style="font-size: 13px;"></i> <span style="margin-right:8px;margin-left: 6px;margin-top: -4px;font-size: 13px;">'.$term1->name.'</span></span>'; 
+            if (0 == ($contador % 3)){
+               $servicos .= '<br>';
+            }
         } 
    endwhile;
    endif; 
@@ -714,26 +725,28 @@
    $regime_product_info = get_post_meta( $id_produto, 'regime_product_info', true ); 
    $check_taxas = get_post_meta( $id_produto, 'check_taxas', true );
         $valor_taxas_exibicao = get_post_meta( $id_produto, 'valor_taxas', true );
-   if ($check_taxas == 'on') { 
+        $valor_taxas = get_post_meta( $id_produto, 'valor_taxas', true ); 
+   if (empty($valor_taxas) || $valor_taxas == 0 || $valor_taxas == "0,00") { 
        $taxas = 'Valor das taxas inclusas';
    }else{
-        $valor_taxas = get_post_meta( $id_produto, 'valor_taxas', true ); 
         $taxas = '+ '.get_woocommerce_currency_symbol ().' '.$valor_taxas.' em taxas e impostos';
    } 
    
-   $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))), "valor_taxas_exibicao" => $valor_taxas_exibicao);
+   if ($meta_pessoas_acomodacao == $pax_pesquisa_inicial || $meta_pessoas_acomodacao == $pax_pesquisa_total) { 
+      $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))), "valor_taxas_exibicao" => $valor_taxas_exibicao, "slug" => $slug);
+   }
 
+   if ($chd > 0) { 
 
-
-   for ($i=1; $i < 10; $i++) {  
+   for ($i=1; $i < 30; $i++) {  
     
    $meta_valor_inicial_acomodacao = get_post_meta( $id_produto, 'tar_valor_final_product_info'.$i, true );
    $regime_product_info = get_post_meta( $id_produto, 'regime_product_info'.$i, true ); 
    $check_taxas = get_post_meta( $id_produto, 'check_taxas'.$i, true );
         $valor_taxas = get_post_meta( $id_produto, 'valor_taxas'.$i, true );
         $tar_periodo_product_info = get_post_meta( $id_produto, 'periodo_product_info'.$i, true );
-        $valor_taxas_exibicao = get_post_meta( $id_produto, 'valor_taxas'.$i, true );
-   if ($check_taxas == 'on' || empty($valor_taxas)) {
+        $valor_taxas_exibicao = get_post_meta( $id_produto, 'valor_taxas'.$i, true ); 
+   if (empty($valor_taxas) || $valor_taxas == 0 || $valor_taxas == "0,00") { 
     $valor_taxas = 0;
        $taxas = 'Valor das taxas incluso';
    }else{
@@ -742,8 +755,51 @@
    $tar_periodo_inicio_product_info = get_post_meta( $id_produto, 'tar_periodo_product_info'.$i, true ); 
    $tar_periodo_final_product_info = get_post_meta( $id_produto, 'tar_periodo_final_product_info'.$i, true ); 
 
+   $tar_check_crianca_product_info = get_post_meta( $id_produto, 'tar_check_crianca_product_info'.$i, true ); 
+   $tar_idade_crianca_product_info = get_post_meta( $id_produto, 'tar_idade_crianca_product_info'.$i, true );  
+
    if (!empty($meta_valor_inicial_acomodacao)) { 
-   $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))), "valor_taxas_exibicao" => $valor_taxas_exibicao);
+      if ($meta_pessoas_acomodacao == $pax_pesquisa_inicial || $meta_pessoas_acomodacao == $pax_pesquisa_total) { 
+
+         if ($tar_check_crianca_product_info === "on") {
+            if ($tar_idade_crianca_product_info >= $idade_crianca) { 
+               $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))), "valor_taxas_exibicao" => $valor_taxas_exibicao, "slug" => $slug);
+            }
+         }
+
+
+      }
+}
+}
+}else{
+   for ($i=1; $i < 30; $i++) {  
+    
+   $meta_valor_inicial_acomodacao = get_post_meta( $id_produto, 'tar_valor_final_product_info'.$i, true );
+   $regime_product_info = get_post_meta( $id_produto, 'regime_product_info'.$i, true ); 
+   $check_taxas = get_post_meta( $id_produto, 'check_taxas'.$i, true );
+        $valor_taxas = get_post_meta( $id_produto, 'valor_taxas'.$i, true );
+        $tar_periodo_product_info = get_post_meta( $id_produto, 'periodo_product_info'.$i, true );
+        $valor_taxas_exibicao = get_post_meta( $id_produto, 'valor_taxas'.$i, true ); 
+   if (empty($valor_taxas) || $valor_taxas == 0 || $valor_taxas == "0,00") { 
+    $valor_taxas = 0;
+       $taxas = 'Valor das taxas incluso';
+   }else{
+        $taxas = '+ '.get_woocommerce_currency_symbol ().' '.$valor_taxas.' em taxas e impostos';
+   } 
+   $tar_periodo_inicio_product_info = get_post_meta( $id_produto, 'tar_periodo_product_info'.$i, true ); 
+   $tar_periodo_final_product_info = get_post_meta( $id_produto, 'tar_periodo_final_product_info'.$i, true ); 
+
+   $tar_check_crianca_product_info = get_post_meta( $id_produto, 'tar_check_crianca_product_info'.$i, true ); 
+   $tar_idade_crianca_product_info = get_post_meta( $id_produto, 'tar_idade_crianca_product_info'.$i, true );  
+
+   if (!empty($meta_valor_inicial_acomodacao)) { 
+      if ($meta_pessoas_acomodacao == $pax_pesquisa_inicial) { 
+ 
+               $apartamentos[] = array("nome" => $nome_apartamento, "acomodacao" => $meta_acomodacao, "tipo" => $tipo, "pax" => $meta_pessoas_acomodacao, "valor" => $meta_valor_inicial_acomodacao, "id_produto" => $id_produto, "regime" => $regime_product_info, 'taxas' => $taxas, "nome_hotel" => $title, "descricao_hotel" => $description, "foto" => $url, "servicos" => $servicos, "qtd_quartos" => $apto_demo_product_info, "periodo" => $tar_periodo_product_info, "data_inicial" => implode("-", array_reverse(explode("/", $tar_periodo_inicio_product_info))), "data_fim" => implode("-", array_reverse(explode("/", $tar_periodo_final_product_info))), "valor_taxas_exibicao" => $valor_taxas_exibicao, "slug" => $slug); 
+
+
+      }
+}
 }
 }
 
@@ -815,7 +871,7 @@ $contador = 0;
                                 <br>
                                 <?php 
                                     $valor_diaria = str_replace(",", ".", str_replace(".", "", $apartamentos[$x]['valor']));
-                                    $valor_total_sem_taxa = intval($diferenca_data->days)*floatval($valor_diaria);
+                                    $valor_total_sem_taxa = (intval($diferenca_data->days)+1)*floatval($valor_diaria);
                                 ?> 
                                 <span style="font-size: 22px"><?=get_woocommerce_currency_symbol ();?>  <?=number_format($valor_total_sem_taxa, 2, ',', '.') ?></span>
                                 <br>
@@ -826,7 +882,7 @@ $contador = 0;
                              </div> 
                           </div>  
                   <br> 
-                  <form action="/apto/?param=<?=str_replace(" ", "-", $apartamentos[$x]['acomodacao'])?>;<?=$apartamentos[$x]['id_produto']?>;<?=strtolower(str_replace(" ", "-", $apartamentos[$x]['nome_hotel']))?>" method="POST">
+                  <form action="/apto/?param=<?=str_replace(" ", "-", $apartamentos[$x]['acomodacao'])?>;<?=$apartamentos[$x]['id_produto']?>;<?=strtolower($apartamentos[$x]['slug'])?>" method="POST">
 
                         <input type="hidden" name="periodo" value="<?=str_replace("-", "/", $dados[1]) ?> a <?=str_replace("-", "/", $dados[2])?>">
                         <input type="hidden" name="acomodacao" value="<?=$apartamentos[$x]['acomodacao']?>">

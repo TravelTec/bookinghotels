@@ -162,6 +162,7 @@ var dados = new Array();
             dados[i] = new Array();
             dados[i].push(new Date(year_start, month_start, day_start)); 
             dados[i].push(new Date(year_end, month_end, day_end));  
+            dados[i].push(ranges[i].valor);  
     } 
 }
 
@@ -267,9 +268,9 @@ var currentYear = date.getFullYear();
         $(".btn-checkout").prop("disabled", false);
 
         var diff = moment(end,"DD/MM/YYYY HH:mm:ss").diff(moment(start,"DD/MM/YYYY HH:mm:ss"));
-var dias = (moment.duration(diff).asDays());  
+var dias = (moment.duration(diff).asDays())+1;  
 
-       var price=parseFloat($("#valor_calendario").val()).toFixed(2);
+       var price=parseFloat(dados[i][2]).toFixed(2);
        var quantity=parseFloat(dias).toFixed(2);
        var total=parseFloat(price*quantity);
 
@@ -285,7 +286,7 @@ $("#diarias_int").val(dias.toFixed(0));
 $.ajax({
     type: "POST",
     url: "/wp-content/plugins/bookinghotels/includes/ajax-periodo.php",
-    data: {start:moment(start).format('MM/DD/YYYY'), end:moment(end).format('MM/DD/YYYY')}, 
+    data: {start:moment(start).format('DD/MM/YYYY'), end:moment(end).format('DD/MM/YYYY')}, 
     success: function(result){ 
         console.log(result);
     }

@@ -19,7 +19,7 @@
      'post_status' => 'publish',
      'numberposts' => 1
    );
-   $my_posts = get_posts($args);
+   $my_posts = get_posts($args); 
    
    	$title = $my_posts[0]->post_title;
    	$description = $my_posts[0]->post_content;
@@ -90,6 +90,7 @@
    );
    
    if( $cat_terms ){
+      $contador = 0;
    
    foreach( $cat_terms as $term ) { 
    
@@ -112,7 +113,12 @@
    while( $_posts->have_posts() ) : $_posts->the_post();  
    $post = get_post(); 
    		if ($post->ID == $id) {
+
+            $contador++;
    			$servicos .= '<span style="background-color:#eaeaea;padding:5px"><i class="fa fa-info" style="font-size: 13px;"></i> <span style="margin-right:8px;margin-left: 6px;margin-top: -4px;font-size: 13px;">'.$term->name.'</span></span> '; 
+            if (0 == ($contador % 6)){
+               $servicos .= '<br>';
+            }
    		}
    ?> 
 <?php
@@ -851,7 +857,7 @@ Licensed under MIT
             <div style="text-align: center;"> 
                <h5 style="margin: 13px"><strong>Valores</strong></h5>
                <div style="height: 50px;background-color: #c9f3e1;padding: 15px 0px;">
-                  <h4><strong><?=get_woocommerce_currency_symbol ();?> <?=$_POST['por_dia']?></strong> <small style="font-size: 13px">por dia</small></h4>
+                  <h4><strong><?=get_woocommerce_currency_symbol ();?> <?=$tar_valor_final_product_info_inicial?></strong> <small style="font-size: 13px">por dia</small></h4>
                   <br>
                   <div id="div_date">
                      <input type="text" id="select-delivery-date-input" style="height: 2px;border: none;color:#fff"> 
@@ -972,7 +978,7 @@ date_default_timezone_set('America/Sao_Paulo');
    <br><br>
    <input type="hidden" id="inicio_calendario" value="<?=$tar_periodo_product_info_inicial?>" name="">
    <input type="hidden" id="fim_calendario" value="<?=$tar_periodo_final_product_info_inicial?>" name="">
-   <input type="hidden" id="valor_calendario" value="<?=str_replace(",", ".", str_replace(".", "", $_POST['valor_calendario_sem_formatacao']))?>" name="">
+   <input type="hidden" id="valor_calendario" value="<?=str_replace(",", ".", str_replace(".", "", $tar_valor_final_product_info_inicial))?>" name="">
    <input type="hidden" id="currency" value="<?=get_woocommerce_currency_symbol ();?>" name="">
 </div>
 <input type="hidden" id="uri" name="" value="<?=$_SERVER['REQUEST_URI']?>">

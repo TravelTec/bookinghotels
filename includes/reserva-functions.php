@@ -1008,7 +1008,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas2" <?=($check_taxas2 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa2()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas2 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas2" name="valor_taxas2" value="<?=$valor_taxas2?>" placeholder="0,00"></p>
+                <p style="padding:0"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;" class="" id="valor_taxas2" name="valor_taxas2" value="<?=$valor_taxas2?>" placeholder="0,00"></p>
             </td> 
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info2" name="tar_check_crianca_product_info2" <?=($tar_check_crianca_product_info2 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info2" name="tar_idade_crianca_product_info2" value="<?=$tar_idade_crianca_product_info2?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1103,7 +1103,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas3" name="check_taxas3" <?=($check_taxas3 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa3()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas3 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas3" name="valor_taxas3" value="<?=$valor_taxas3?>" placeholder="0,00"></p>
+                <p style="padding:0"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute; " class="" id="valor_taxas3" name="valor_taxas3" value="<?=$valor_taxas3?>" placeholder="0,00"></p>
             </td>  
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info3" name="tar_check_crianca_product_info3" <?=($tar_check_crianca_product_info3 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info3" name="tar_idade_crianca_product_info3" value="<?=$tar_idade_crianca_product_info3?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1198,7 +1198,7 @@ function add_demo_product_type( $types ){
 </td>  
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas4" name="check_taxas2" <?=($check_taxas4 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa4()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas4 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas4" name="valor_taxas4" value="<?=$valor_taxas4?>" placeholder="0,00"></p>
+                <p style="padding:0"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;" class="" id="valor_taxas4" name="valor_taxas4" value="<?=$valor_taxas4?>" placeholder="0,00"></p>
             </td> 
 <td>   
     <p class=""><input type="checkbox" id="tar_check_crianca_product_info4" name="tar_check_crianca_product_info4" <?=($tar_check_crianca_product_info4 == 'on' ? 'checked' : '')?>> Criança até <input type="text" style="width: 3.5%;margin: 0px 5px;position: absolute;" class="" id="tar_idade_crianca_product_info4" name="tar_idade_crianca_product_info4" value="<?=$tar_idade_crianca_product_info4?>"> <span style="position: absolute;margin-left: 58px;">anos pode se hospedar junto</span> </p>
@@ -1293,7 +1293,7 @@ function add_demo_product_type( $types ){
 </td> 
 
             <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas5" name="check_taxas5" <?=($check_taxas5 == 'on' ? 'checked' : '')?> onclick="toggle_input_valor_taxa5()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;<?=($check_taxas5 == 'on' ? 'display:none' : 'display:block')?>" class="" id="valor_taxas5" name="valor_taxas5" value="<?=$valor_taxas5?>" placeholder="0,00"></p>
+                <p style="padding:0"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;" class="" id="valor_taxas5" name="valor_taxas5" value="<?=$valor_taxas5?>" placeholder="0,00"></p>
             </td>  
 
 <td>   
@@ -1392,7 +1392,7 @@ function add_demo_product_type( $types ){
 </td>  
 
 <td style="">
-                <p style="padding:0"><input type="checkbox" id="check_taxas2" name="check_taxas{{(data.key)}}" checked onclick="toggle_input_valor_taxa{{(data.key)}}()"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;display: none" class="" id="valor_taxas{{(data.key)}}" name="valor_taxas{{(data.key)}}" value="" placeholder="0,00"></p>
+                <p style="padding:0"> Taxas inclusas <input type="text" style="width: 4%;margin: 0px 5px;position: absolute;" class="" id="valor_taxas{{(data.key)}}" name="valor_taxas{{(data.key)}}" value="" placeholder="0,00"></p>
             </td> 
 
 <td>   
@@ -1532,11 +1532,7 @@ function save_tar_product_settings( $post_id ){
         
     $tar_qtd_limite = $_POST['tar_qtd_limite']; 
 
-    update_post_meta( $post_id, 'tar_qtd_limite', esc_attr( $tar_qtd_limite ) ); 
-        
-    $check_taxas = $_POST['check_taxas']; 
-
-    update_post_meta( $post_id, 'check_taxas', esc_attr( $check_taxas ) );
+    update_post_meta( $post_id, 'tar_qtd_limite', esc_attr( $tar_qtd_limite ) );  
         
     $valor_taxas = $_POST['valor_taxas']; 
 
@@ -1593,11 +1589,7 @@ function save_tar_product_settings( $post_id ){
         
     $tar_qtd_limite2 = $_POST['tar_qtd_limite2']; 
 
-    update_post_meta( $post_id, 'tar_qtd_limite2', esc_attr( $tar_qtd_limite2 ) ); 
-        
-    $check_taxas2 = $_POST['check_taxas2']; 
-
-    update_post_meta( $post_id, 'check_taxas2', esc_attr( $check_taxas2 ) );
+    update_post_meta( $post_id, 'tar_qtd_limite2', esc_attr( $tar_qtd_limite2 ) );  
         
     $valor_taxas2 = $_POST['valor_taxas2']; 
 
@@ -1654,11 +1646,7 @@ function save_tar_product_settings( $post_id ){
         
     $tar_qtd_limite3 = $_POST['tar_qtd_limite3']; 
 
-    update_post_meta( $post_id, 'tar_qtd_limite3', esc_attr( $tar_qtd_limite3 ) ); 
-        
-    $check_taxas3 = $_POST['check_taxas3']; 
-
-    update_post_meta( $post_id, 'check_taxas3', esc_attr( $check_taxas3 ) );
+    update_post_meta( $post_id, 'tar_qtd_limite3', esc_attr( $tar_qtd_limite3 ) );  
         
     $valor_taxa3 = $_POST['valor_taxa3']; 
 
@@ -1708,11 +1696,7 @@ function save_tar_product_settings( $post_id ){
         
     $tar_qtd_limite4 = $_POST['tar_qtd_limite4']; 
 
-    update_post_meta( $post_id, 'tar_qtd_limite4', esc_attr( $tar_qtd_limite4 ) ); 
-        
-    $check_taxas4 = $_POST['check_taxas4']; 
-
-    update_post_meta( $post_id, 'check_taxas4', esc_attr( $check_taxas4 ) );
+    update_post_meta( $post_id, 'tar_qtd_limite4', esc_attr( $tar_qtd_limite4 ) );  
         
     $valor_taxa4 = $_POST['valor_taxa4']; 
 
@@ -1762,11 +1746,7 @@ function save_tar_product_settings( $post_id ){
         
     $tar_qtd_limite5 = $_POST['tar_qtd_limite5']; 
 
-    update_post_meta( $post_id, 'tar_qtd_limite5', esc_attr( $tar_qtd_limite5 ) ); 
-        
-    $check_taxas5 = $_POST['check_taxas5']; 
-
-    update_post_meta( $post_id, 'check_taxas5', esc_attr( $check_taxas5 ) );
+    update_post_meta( $post_id, 'tar_qtd_limite5', esc_attr( $tar_qtd_limite5 ) );  
         
     $valor_taxa5 = $_POST['valor_taxa5']; 
 
@@ -1904,4 +1884,9 @@ function custom_cart_items_prices( $cart ) {
         else
             $product->post->post_title = $new_name;
     }
+}
+
+add_action( 'woocommerce_checkout_create_order_line_item', 'action_checkout_create_order_line_item_callback', 1000, 4 );
+function action_checkout_create_order_line_item_callback( $item, $cart_item_key, $cart_item, $order ) {   
+    $item->update_meta_data( 'datas', $_SESSION['datas']);
 }
