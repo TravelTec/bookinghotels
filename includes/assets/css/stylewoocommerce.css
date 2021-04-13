@@ -36,3 +36,7 @@
 #ui-datepicker-div{
         z-index: 9999999999999999 !important;
 }
+
+#postexcerpt #product-type, #postexcerpt .type_box, #wpseo_meta #product-type, #wpseo_meta .type_box{
+    display: none !important;
+}
