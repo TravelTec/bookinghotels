@@ -1909,7 +1909,7 @@ function woo_custom_product_tabs( $tabs ) {
 
         //Attribute Description tab
         $tabs['attrib_desc_tab'] = array(
-            'title'     => __( '´Serviços', 'woocommerce' ),
+            'title'     => __( 'Serviços', 'woocommerce' ),
             'priority'  => 100,
             'callback'  => 'woo_attrib_desc_tab_content'
         );
