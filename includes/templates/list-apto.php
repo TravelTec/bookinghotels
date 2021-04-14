@@ -1072,4 +1072,5 @@ date_default_timezone_set('America/Sao_Paulo');
     		
 </script>
 <!-- /Blog Section with Sidebar -->
+<?php session_write_close(); ?>
 <?php get_footer(); ?>

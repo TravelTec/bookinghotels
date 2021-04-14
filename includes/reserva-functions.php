@@ -1890,3 +1890,5 @@ add_action( 'woocommerce_checkout_create_order_line_item', 'action_checkout_crea
 function action_checkout_create_order_line_item_callback( $item, $cart_item_key, $cart_item, $order ) {   
     $item->update_meta_data( 'datas', $_SESSION['datas']);
 }
+
+session_write_close();
