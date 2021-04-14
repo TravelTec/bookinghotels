@@ -1891,4 +1891,253 @@ function action_checkout_create_order_line_item_callback( $item, $cart_item_key,
     $item->update_meta_data( 'datas', $_SESSION['datas']);
 }
 
+add_filter( 'woocommerce_product_tabs', 'woo_custom_product_tabs' );
+function woo_custom_product_tabs( $tabs ) {
+
+    global $product;
+
+    $product_type = $product->get_type();
+    if ($product_type === 'demo') {  
+        // 1) Removing tabs
+
+        unset( $tabs['description'] );              // Remove the description tab
+        // unset( $tabs['reviews'] );               // Remove the reviews tab
+        unset( $tabs['additional_information'] );   // Remove the additional information tab
+
+
+        // 2 Adding new tabs and set the right order
+
+        //Attribute Description tab
+        $tabs['attrib_desc_tab'] = array(
+            'title'     => __( '´Serviços', 'woocommerce' ),
+            'priority'  => 100,
+            'callback'  => 'woo_attrib_desc_tab_content'
+        );
+
+        // Adds the qty pricing  tab
+        $tabs['qty_pricing_tab'] = array(
+            'title'     => __( 'Períodos', 'woocommerce' ),
+            'priority'  => 110,
+            'callback'  => 'woo_qty_pricing_tab_content'
+        );
+
+        // Adds the other products tab
+        $tabs['other_products_tab'] = array(
+            'title'     => __( 'Termos de reserva', 'woocommerce' ),
+            'priority'  => 120,
+            'callback'  => 'woo_other_products_tab_content'
+        );
+
+        return $tabs;
+    }
+
+}
+
+// New Tab contents
+
+function woo_attrib_desc_tab_content() {
+    // The attribute description tab content
+    echo '<h2>Serviços do hotel</h2>';
+
+    global $product; 
+
+    $data = $product->get_data();
+
+    $id_produto = $data['id'];
+    $slug = $data['slug'];
+
+    //est_product_info
+    $est_product_info = get_post_meta( $id_produto, 'est_product_info', true );  
+
+    $args = array(
+     'name'        => strtolower(str_replace(" ", "-", $est_product_info)),
+     'post_type'   => 'ttbooking',
+     'post_status' => 'publish',
+     'numberposts' => 1
+   );
+   $my_posts = get_posts($args); 
+   
+    $title = $my_posts[0]->post_title;
+    $description = $my_posts[0]->post_content;
+    $id = $my_posts[0]->ID; 
+
+    $servicos = '';
+   
+   $cat_terms = get_terms(
+       array('servicos'),
+       array(
+               'hide_empty'    => false,
+               'orderby'       => 'name',
+               'order'         => 'ASC',
+               'number'        => 50 //specify yours
+           )
+   );
+   
+   if( $cat_terms ){
+      $contador = 0;
+   
+   foreach( $cat_terms as $term ) { 
+   
+   $args = array(
+       'post_type'             => 'ttbooking',
+       'posts_per_page'        => 50, //specify yours
+       'post_status'           => 'publish',
+       'tax_query'             => array(
+                                   array(
+                                       'taxonomy' => 'servicos',
+                                       'field'    => 'slug',
+                                       'terms'    => $term->slug,
+                                   ),
+                               ),
+       'ignore_sticky_posts'   => true //caller_get_posts is deprecated since 3.1
+   );
+   $_posts = new WP_Query( $args ); 
+   
+   if( $_posts->have_posts() ) :
+   while( $_posts->have_posts() ) : $_posts->the_post();  
+   $post = get_post(); 
+        if ($post->ID == $id) {
+
+            $contador++;
+            $servicos .= '<span style="background-color:#eaeaea;padding:5px"><i class="fa fa-info" style="font-size: 13px;"></i> <span style="margin-right:8px;margin-left: 6px;margin-top: -4px;font-size: 13px;">'.$term->name.'</span></span> '; 
+            if (0 == ($contador % 6)){
+               $servicos .= '<br>';
+            }
+        }
+   ?> 
+<?php
+   endwhile;
+   endif;
+   wp_reset_postdata(); //important  
+   
+   }
+   }
+
+    echo $servicos;
+}
+function woo_qty_pricing_tab_content() {
+    // The qty pricing tab content
+    echo '<h2>Períodos disponíveis</h2>';
+
+    global $product; 
+
+    $data = $product->get_data();
+
+    $id_produto = $data['id'];
+   
+   $periodo_product_info_inicial = get_post_meta( $id_produto, 'periodo_product_info', true );  
+   $tar_periodo_product_info_inicial = get_post_meta( $id_produto, 'tar_periodo_product_info', true );   
+   $tar_periodo_final_product_info_inicial = get_post_meta( $id_produto, 'tar_periodo_final_product_info', true ); 
+   
+   $periodo_product_info2 = get_post_meta( $id_produto, 'periodo_product_info1', true );  
+   $tar_periodo_product_info2 = get_post_meta( $id_produto, 'tar_periodo_product_info1', true );   
+   $tar_periodo_final_product_info2 = get_post_meta( $id_produto, 'tar_periodo_final_product_info1', true ); 
+   
+   $periodo_product_info3 = get_post_meta( $id_produto, 'periodo_product_info2', true );  
+   $tar_periodo_product_info3 = get_post_meta( $id_produto, 'tar_periodo_product_info2', true );   
+   $tar_periodo_final_product_info3 = get_post_meta( $id_produto, 'tar_periodo_final_product_info2', true );  
+
+   setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo'); 
+
+   $retorno .= '<strong>'.$periodo_product_info_inicial.'</strong><br>
+            <span>De '.strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_product_info_inicial))))).' a '.strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_final_product_info_inicial))))).'</span>';
+
+          if (!empty($periodo_product_info2)) { 
+               $retorno .= '<br>
+               <br>
+
+            <strong>'.$periodo_product_info2.'</strong><br>
+            <span>De '.strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_product_info2))))).' a '.strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_final_product_info2))))).'</span>';
+        }
+
+            if (!empty($periodo_product_info3)) { 
+               $retorno .= '<br>
+               <br>
+
+            <strong>'.$periodo_product_info3.'</strong><br>
+            <span>De '.strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_product_info3))))).' a '.strftime('%d de %B', strtotime(implode("-", array_reverse(explode("/", $tar_periodo_final_product_info3))))).'</span>';
+            }
+
+            echo $retorno;
+}
+function woo_other_products_tab_content() {
+    // The other products tab content
+    echo '<h2>Termos de reserva</h2>';
+
+    global $product; 
+
+    $data = $product->get_data();
+
+    $id_produto = $data['id'];
+    $slug = $data['slug'];
+
+    //est_product_info
+    $est_product_info = get_post_meta( $id_produto, 'est_product_info', true );  
+
+    $args = array(
+     'name'        => strtolower(str_replace(" ", "-", $est_product_info)),
+     'post_type'   => 'ttbooking',
+     'post_status' => 'publish',
+     'numberposts' => 1
+   );
+   $my_posts = get_posts($args); 
+   
+    $title = $my_posts[0]->post_title;
+    $description = $my_posts[0]->post_content;
+    $id = $my_posts[0]->ID; 
+
+    $cat_terms = get_terms(
+       array('termos'),
+       array(
+               'hide_empty'    => false,
+               'orderby'       => 'name',
+               'order'         => 'ASC',
+               'number'        => 50 //specify yours
+           )
+   );
+   
+   if( $cat_terms ){
+   
+   foreach( $cat_terms as $term ) { 
+   
+   $args = array(
+       'post_type'             => 'ttbooking',
+       'posts_per_page'        => 50, //specify yours
+       'post_status'           => 'publish',
+       'tax_query'             => array(
+                                   array(
+                                       'taxonomy' => 'termos',
+                                       'field'    => 'slug',
+                                       'terms'    => $term->slug,
+                                   ),
+                               ),
+       'ignore_sticky_posts'   => true //caller_get_posts is deprecated since 3.1
+   );
+   $_posts = new WP_Query( $args ); 
+   
+   if( $_posts->have_posts() ) :
+   while( $_posts->have_posts() ) : $_posts->the_post();  
+   $post = get_post(); 
+         if ($post->ID == $id) {
+            echo $post->post_content.'<hr>';
+         }
+         
+   endwhile;
+   endif;
+   wp_reset_postdata(); //important  
+
+}
+}
+}
+
+add_filter( 'woocommerce_product_tabs', 'sb_woo_move_description_tab', 98);
+function sb_woo_move_description_tab($tabs) { 
+    $tabs['attrib_desc_tab']['priority'] = 20;
+    $tabs['qty_pricing_tab']['priority'] = 30;
+    $tabs['other_products_tab']['priority'] = 40;
+    $tabs['reviews']['priority'] = 50;
+    return $tabs;
+}
+
 session_write_close();
