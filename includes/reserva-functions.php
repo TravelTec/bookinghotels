@@ -1950,7 +1950,7 @@ function woo_attrib_desc_tab_content() {
     $est_product_info = get_post_meta( $id_produto, 'est_product_info', true );  
 
     $args = array(
-     'name'        => strtolower(str_replace(" ", "-", $est_product_info)),
+     'name'        => tirarAcentos(strtolower(str_replace(" ", "-", str_replace(":", "", $est_product_info)))),
      'post_type'   => 'ttbooking',
      'post_status' => 'publish',
      'numberposts' => 1
@@ -2000,7 +2000,7 @@ function woo_attrib_desc_tab_content() {
 
             $contador++;
             $servicos .= '<span style="background-color:#eaeaea;padding:5px"><i class="fa fa-info" style="font-size: 13px;"></i> <span style="margin-right:8px;margin-left: 6px;margin-top: -4px;font-size: 13px;">'.$term->name.'</span></span> '; 
-            if (0 == ($contador % 6)){
+            if (0 == ($contador % 10)){
                $servicos .= '<br>';
             }
         }
@@ -2061,6 +2061,9 @@ date_default_timezone_set('America/Sao_Paulo');
 
             echo $retorno;
 }
+function tirarAcentos($string){
+    return preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string);
+}
 function woo_other_products_tab_content() {
     // The other products tab content
     echo '<h2>Termos de reserva</h2>';
@@ -2073,10 +2076,10 @@ function woo_other_products_tab_content() {
     $slug = $data['slug'];
 
     //est_product_info
-    $est_product_info = get_post_meta( $id_produto, 'est_product_info', true );  
+    $est_product_info = get_post_meta( $id_produto, 'est_product_info', true );    
 
     $args = array(
-     'name'        => strtolower(str_replace(" ", "-", $est_product_info)),
+     'name'        => tirarAcentos(strtolower(str_replace(" ", "-", str_replace(":", "", $est_product_info)))),
      'post_type'   => 'ttbooking',
      'post_status' => 'publish',
      'numberposts' => 1
@@ -2122,7 +2125,7 @@ function woo_other_products_tab_content() {
          if ($post->ID == $id) {
             echo $post->post_content.'<hr>';
          }
-         
+
    endwhile;
    endif;
    wp_reset_postdata(); //important  
